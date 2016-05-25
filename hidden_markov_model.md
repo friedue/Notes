@@ -6,7 +6,7 @@ Each state has its own __emission probabilities__, which, for example, models th
 
 Each state also has __transition probabilities__, the probabilities of moving from this state to a new state.
 
-![]()
+![HMM](https://raw.githubusercontent.com/friedue/Notes/master/images/HMM_01.png)
 
 [Casino example](http://learninglover.com/blog/?p=635)
 
