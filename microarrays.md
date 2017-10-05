@@ -45,6 +45,8 @@ info based on TAC User Manual
 
 ##### Robust Microarray Average (RMA) 
 
+_info from [Carvalho 2016](https://www.ncbi.nlm.nih.gov/pubmed/27008013), [RMA paper](https://www.ncbi.nlm.nih.gov/pubmed/12925520?access_num=12925520&link_type=MED)_
+
 Steps:
 
 1. Background adjustment
@@ -57,16 +59,14 @@ Steps:
 	- e.g. using a linear model
 	- RMA method: Tukey's Median Polish strategy (robust and fast)
 
-info from [Carvalho 2016](https://www.ncbi.nlm.nih.gov/pubmed/27008013)
-[RMA paper](https://www.ncbi.nlm.nih.gov/pubmed/12925520?access_num=12925520&link_type=MED)
 
 ![Comparison of correction and normalization approaches](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_normMethodComparison_TACmanual.png)
 
-PLIER is the proprietory (?) algorithm of Affymetrix/Thermo Fisher
+PLIER is the proprietory (?) algorithm of Affymetrix/Thermo Fisher; Table taken from TAC Manual (Appendix)
 
-[White Paper Normalization](http://tools.thermofisher.com/content/sfs/brochures/sst_gccn_whitepaper.pdf)
-[White Paper Probe Sets I](http://tools.thermofisher.com/content/sfs/brochures/exon_gene_signal_estimate_whitepaper.pdf)
-[White Paper Probe Sets II](http://tools.thermofisher.com/content/sfs/brochures/exon_probeset_trans_clust_whitepaper.pdf)
+[White Paper Normalization](http://tools.thermofisher.com/content/sfs/brochures/sst_gccn_whitepaper.pdf) |
+[White Paper Probe Sets A](http://tools.thermofisher.com/content/sfs/brochures/exon_gene_signal_estimate_whitepaper.pdf) |
+[White Paper Probe Sets B](http://tools.thermofisher.com/content/sfs/brochures/exon_probeset_trans_clust_whitepaper.pdf)
 
 ## QC
 
