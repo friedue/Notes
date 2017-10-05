@@ -24,20 +24,49 @@ The data analyst can choose one from three definitions of probesets for summariz
 2. **Extended Probesets**: supported by non-full-length mRNA GenBank records, EST sequences, ENSEMBL gene collections and others;
 3. **Full Probesets**: supported by gene and exon prediction algorithms only.
 
+Which one to use?
+
+![WhitePaper probe sets](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_differentProbesets.png)
+
+> Each gene annotation is constructed from transcript annotations from one or more confidence levels. Some parts of a gene annotation may
+ derive from high confidence core annotations, while other parts derive from the lower confidence extended or full annotations. [White Paper Probe Sets II](http://tools.thermofisher.com/content/sfs/brochures/exon_probeset_trans_clust_whitepaper.pdf)
+
+#### Normalization methods
+
+##### MAS5
+
+- Tukey's biweight estimator to provide robust mean signal, Wilcoxo rank test for p-value
+- bckg estimation: weighted average of the lowest 2% if the feature intensities
+- makes use of mismatch probes (applicable to HTA?)
+- linear scaling with trimmed mean
+- analyzes each array independently --> reduced power compared to the other methods
+
+info based on TAC User Manual
+
+##### Robust Microarray Average (RMA) 
+
 Steps:
 
-1. background correction
+1. Background adjustment
 	- noise from cross-hybridization and optical noise from the scanning
-	- most commonly used algorithm: Robust Microarray Average (RMA)
-		- bckg noise = normal distribution
-		- true signal = exponential distribution that is probeset-specific 
-2. normalization
-	- if there are other batch effects, quantile normalization may help
-3. summarization
+	- bckg noise = normal distribution
+	- true signal = exponential distribution that is probeset-specific 
+2. Quantile normalization
+3. Summarization
 	- collapsing multiple probes per target into one signal
 	- e.g. using a linear model
 	- RMA method: Tukey's Median Polish strategy (robust and fast)
 
+info from [Carvalho 2016](https://www.ncbi.nlm.nih.gov/pubmed/27008013)
+[RMA paper](https://www.ncbi.nlm.nih.gov/pubmed/12925520?access_num=12925520&link_type=MED)
+
+![Comparison of correction and normalization approaches](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_normMethodComparison_TACmanual.png)
+
+PLIER is the proprietory (?) algorithm of Affymetrix/Thermo Fisher
+
+[White Paper Normalization](http://tools.thermofisher.com/content/sfs/brochures/sst_gccn_whitepaper.pdf)
+[White Paper Probe Sets I](http://tools.thermofisher.com/content/sfs/brochures/exon_gene_signal_estimate_whitepaper.pdf)
+[White Paper Probe Sets II](http://tools.thermofisher.com/content/sfs/brochures/exon_probeset_trans_clust_whitepaper.pdf)
 
 ## QC
 
@@ -80,10 +109,12 @@ signal from BioB to Cre
 	- Finally, the fraction of variance explained for the attribute is the mean of the fraction explained over all of the probesets.
 
 * __boxplots__
-
+	- per sample
+	- per probe GC content
+	![from Affy's White Paper](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_GCprobes.png)
 
 	
-=================================================
+-----------------------------------------------
 
 ## TAC 
 
