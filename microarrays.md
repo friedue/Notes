@@ -6,7 +6,7 @@ There are two types of MA platforms:
 * spotted array -- 2 colors
 	* ![](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_twoColors.png)
 * synthesized oligos -- 1 color (Affymetrix)
-	* * ![](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_oneColor.png)
+	* ![](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_oneColor.png)
 	
 We have: **GeneChip Human Transcriptome Array 2.0** (Affymetrix, now Thermo Scientific Fisher)
 
@@ -196,7 +196,36 @@ see affyPLM
 
 ### QC stat plot
 
-see simpleaffy
+see `simpleaffy` [documentation](https://www.rdocumentation.org/packages/simpleaffy/versions/2.48.0/topics/plot.qc.stats)
+
+| Parameter | Meaning |
+|-----------|---------|
+| x			  | A QCStats object |
+| fc.line.col | The colour to mark fold change lines with |
+|sf.ok.region | The colour to mark the region in which scale factors lie within appropriate bounds |
+| chip.label.col | The colour to label the chips with |
+|sf.thresh | Scale factors must be within this fold-range 
+| gdh.thresh | Gapdh ratios must be within this range |
+| ba.thresh | beta actin must be within this range |
+|present.thresh | The percentage of genes called present must lie within this range |
+| bg.thresh	|  Array backgrounds must lie within this range |
+| label 		|  What to call the chips |
+| main			|  The title for the plot |
+| usemid		| If true use 3'/M ratios for the GAPDH and beta actin probes |
+|cex			| Value to scale character size by (e.g. 0.5 means that the text should be plotted half size) |
+| ... | Other parameters to pass through to |
+
+![qc plot](http://cms.cs.ucl.ac.uk/fileadmin/bcb/QC_Report/Appendix_QCstats.jpg)
+
+* lines = arrays, from the 0-fold line to the point that corresponds to its MAS5 scale factor. Affymetrix recommend that scale factors should lie within 3-fold of each other. 
+
+* points: GAPDH and beta-actin 3'/5' ratios. Affy states that beta actin should be within 3, gapdh around 1. Any that fall outside these thresholds (1.25 for gapdh) are coloured red; the rest are blue.
+
+* number of genes called present on each array vs. the average background. These will vary according to the samples being processed, and Affy's QC suggests simply that they should be similar. If any chips have significantly different values this is flagged in red, otherwise the numbers are displayed in blue. By default, 'significant' means that %-present are within 10% of each other; background intensity, 20 units. These last numbers are somewhat arbitrary and may need some tweaking to find values that suit the samples you're dealing with, and the overall nature of your setup.
+
+Finally, if BioB is not present on a chip, this will be flagged by printing 'BioB' in red.
+
+In short, everything in the figure should be blue - red highlights a problem!
 
 ### Source of variation
 
