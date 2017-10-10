@@ -11,8 +11,19 @@ we have: **GeneChip Human Transcriptome Array 2.0** (Affymetrix, now Thermo Scie
 * `.CEL`: Expression Array feature intensity
 * `.CDF`: 	information relating probe pair sets to locations on the array
 
-* `oligo` for data import and preprocessing -- or better: `affy`? (nope, only oligo has the function for reading in HTA2.0 data)
-* [affycoretools](https://github.com/Bioconductor-mirror/affycoretools/tree/master/R) has some functions to streamline array analysis, but they don't seem particularly fast
+## Packages
+
+* `oligo` 
+	- supposed to replace `affy` for the more modern exon-based arrays
+	- for data import and preprocessing
+	- uses `ExpressionSet`
+
+*  `affy`
+	- very comprehensive, but cannot read in HTA2.0 data
+	- [affycoretools](https://github.com/Bioconductor-mirror/affycoretools/tree/master/R) has some functions to streamline array analysis, but they don't seem particularly fast
+	- `arrayQualityMetrics` operates on `AffyBatch`
+* `xps`
+	- uses `ROOT` to speed up storage and retrieval
 
 ### Turning fluorescence signal into biological signal
 
@@ -99,17 +110,15 @@ The model consists of a probe level (assuming that each probe should behave the 
 	
 ```
 
-### Boxplots of log2 intensity
+### Boxplots of log2 intensity per sample
 
 ![](http://data.bits.vib.be/hidden/jhslbjcgnchjdgksqngcvgqdlsjcnv/pubma2014/janick/BioC20.png)
 
 `pmexp = log2(pm(data))`
 
+### Boxplots of log2 intensity per GC probe
 
-* [Hybridization controls](#hcontrol)
-* [Labeling controls](#labelcontrol)
-* Internal control genes (Housekeeping controls)
-* [Global array metrics](#globalmetrics)
+![from Affy's White Paper](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_GCprobes.png)
 
 ### MA plots
 
@@ -135,43 +144,19 @@ dev.off()
 ```
 
 
-### Hybridization Control <a name="hcontrol"></a>
+### Source of variation
 
-see [page 55 ff.](https://assets.thermofisher.com/TFS-Assets/LSG/manuals/tac_user_manual.pdf)
+which attribute explains most of the variation ([page 82f.](https://assets.thermofisher.com/TFS-Assets/LSG/manuals/tac_user_manual.pdf))
 
-Hybridization Controls can be viewed in a 
-line graph to __monitor consistency__ across 
-samples as well as a relative increase in 
-signal from BioB to Cre 
+Determine the fraction of the total variation of the samples can be explained by a given attribute:
 
-* 20x Eukaryotic Hybridization Controls
-* spiked into the hybridization cocktail, independent of RNA sample preparation
-* default spike controls: 
+1. compute variance of each probeset 
+2. retain the 1000 probesets having the highest variance
+3. Accumulate the _total sum of squares_ for each attribute
+4. The _residual sum of squares_ (where the sum over j represents the  sum over samples within the  attribute level) is accumulated.
+5. The fraction of variance explained for the attribute is the _mean of the fraction explained_ over all of the probesets.
 
-	- AFFX-r2-Ec-BioB
-	- AFFX-r2-Ec-BioC
-	- AFFX-r2-Ec-BioD
-	- AFFX-r2-P1-Cre
 
-### Label Control <a name="labelcontrol"></a>
-
-* poly-A RNA controls, synthesized in vitro
-* probe sets from _B. subtilis_ genes that are absent in eukaryotic samples (lys, phe, thr, and dap)
-
-### Global array metrics <a name="globalmetrics"></a>
-
-* __Source of variation__: which attribute explains most of the variation ([page 82f.](https://assets.thermofisher.com/TFS-Assets/LSG/manuals/tac_user_manual.pdf))
-	- determine the fraction of the total variation of the samples can be explained by a given attribute
-	- First, the variance of each probeset is computed, and the 1000 probesets having the highest variance are  retained.
-	- Second, the _total sum of squares_ is accumulated for each attribute.
-	- Third, the _residual sum of squares_ (where the sum over j represents the  sum over samples within the  attribute level) is accumulated.
-	- Fourth, the fraction of variation explained for the probeset is.
-	- Finally, the fraction of variance explained for the attribute is the mean of the fraction explained over all of the probesets.
-
-* __boxplots__
-	- per sample
-	- per probe GC content
-	![from Affy's White Paper](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_GCprobes.png)
 
 	
 -----------------------------------------------
