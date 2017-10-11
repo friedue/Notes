@@ -110,6 +110,12 @@ PLIER is the proprietory (?) algorithm of Affymetrix/Thermo Fisher; Table taken 
 
 ## QC
 
+According to [McCall et al., 2011](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-137), the most useful QC measures for identifying poorly performing arrays are:
+
+* RLE
+* NUSE
+* percent present
+
 ### Pseudo images
 
 Chip pseudo-images are very useful for detecting spatial differences (artifacts) on the invidual arrays (so not for comparing between arrays).
@@ -177,11 +183,13 @@ dev.off()
 
 How much is the expression of a probe spread out relative to the same probe on other arrays?
 
-Computed  for  each  probeset  by  comparing  the  expression  value
+* large spread of RLE indicates large number of DE genes
+* Computed  for  each  probeset  by  comparing  the  expression  value
 on each array against the median expression value for that probeset across all arrays.
-Ideally: most RLE values should be around zero.
+* Ideally: most RLE values should be around zero.
+* does not depend on RMA model
 
-see affyPLM
+see `affyPLM`
 
 ![RLE](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_RLE.png)
 
@@ -223,9 +231,8 @@ see `simpleaffy` [documentation](https://www.rdocumentation.org/packages/simplea
 
 * number of genes called present on each array vs. the average background. These will vary according to the samples being processed, and Affy's QC suggests simply that they should be similar. If any chips have significantly different values this is flagged in red, otherwise the numbers are displayed in blue. By default, 'significant' means that %-present are within 10% of each other; background intensity, 20 units. These last numbers are somewhat arbitrary and may need some tweaking to find values that suit the samples you're dealing with, and the overall nature of your setup.
 
-Finally, if BioB is not present on a chip, this will be flagged by printing 'BioB' in red.
+* BioB = spike-in; if not present on a chip, this will be flagged by printing 'BioB' in red; this is a control for the hybridization step
 
-In short, everything in the figure should be blue - red highlights a problem!
 
 ### Source of variation
 
