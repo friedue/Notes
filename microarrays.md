@@ -250,7 +250,11 @@ Determine the fraction of the total variation of the samples can be explained by
 4. The _residual sum of squares_ (where the sum over j represents the  sum over samples within the  attribute level) is accumulated.
 5. The fraction of variance explained for the attribute is the _mean of the fraction explained_ over all of the probesets.
 
+## Annotating probes with gene names
 
+Thermo Fisher provides data bases with the mappings [here](https://www.thermofisher.com/us/en/home/life-science/microarray-analysis/microarray-data-analysis/genechip-array-annotation-files.html)
+
+[Annotation Dbi](https://www.bioconductor.org/packages/devel/bioc/vignettes/AnnotationDbi/inst/doc/IntroToAnnotationPackages.pdf) seems to be the native R way to do this.
 
 	
 -----------------------------------------------
