@@ -22,7 +22,7 @@ We have: **GeneChip Human Transcriptome Array 2.0** (Affymetrix, now Thermo Scie
 	- information relating probe pair sets to locations on the array ("mapping" of the probe to a gene annotation)
 	- in princple, these mappings can be updated
 
-![]((https://raw.githubusercontent.com/friedue/Notes/master/images/MA_mapping.png)
+![](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_mapping.png)
 
 ## Packages
 
