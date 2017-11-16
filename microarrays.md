@@ -256,7 +256,9 @@ Thermo Fisher provides data bases with the mappings [here](https://www.thermofis
 
 [Annotation Dbi](https://www.bioconductor.org/packages/devel/bioc/vignettes/AnnotationDbi/inst/doc/IntroToAnnotationPackages.pdf) seems to be the native R way to do this.
 
-	
+For an overview of all bioconductor-hosted annotation data bases, see [here](http://www.bioconductor.org/packages/release/BiocViews.html#___AnnotationData)
+
+For HTA2.0, there are two options: [transcript clusters](http://www.bioconductor.org/packages/release/data/annotation/manuals/hta20transcriptcluster.db/man/hta20transcriptcluster.db.pdf) and [probe sets](http://www.bioconductor.org/packages/release/data/annotation/manuals/hta20probeset.db/man/hta20probeset.db.pdf)
 -----------------------------------------------
 
 ## Affymetrix' TAC 
