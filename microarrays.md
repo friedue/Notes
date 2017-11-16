@@ -14,6 +14,10 @@ We have: **GeneChip Human Transcriptome Array 2.0** (Affymetrix, now Thermo Scie
 * 70% exon probes, 30% exon-exon spanning probes
 * additional files and manuals provided by [Thermo Fisher](https://www.thermofisher.com/order/catalog/product/902162)
 
+Typically used microarrays:
+
+![from https://bioinformatics.cancer.gov/sites/default/files/course_material/Btep-R-microA-presentation-Jan-Feb-2015.pdf](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_types.png)
+
 ## File formats of microarrays
 
 * `.CEL`: Expression Array feature intensity
