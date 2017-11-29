@@ -277,6 +277,45 @@ Thermo Fisher provides data bases with the mappings [here](https://www.thermofis
 For an overview of all bioconductor-hosted annotation data bases, see [here](http://www.bioconductor.org/packages/release/BiocViews.html#___AnnotationData).
 For HTA2.0, there are two options: [transcript clusters](http://www.bioconductor.org/packages/release/data/annotation/manuals/hta20transcriptcluster.db/man/hta20transcriptcluster.db.pdf) and [probe sets](http://www.bioconductor.org/packages/release/data/annotation/manuals/hta20probeset.db/man/hta20probeset.db.pdf)
 
+* __probe sets__: for HTA2.0, a probe set is more are less an exon, but not quite
+	- old Exon ST arrays had four-probe probesets (e.g., four 25-mers that were summarized to estimate the expression of a 'probe set region', or PSR). A PSR was some or all of an exon, so it wasn't even that clear what you were measuring. If the exon was long, there might have been multiple PSRs for the exon, or if it was short maybe only one.
+	- when you summarize at the probeset level on the HTA arrays, you are summarizing all the probes in a probeset, which may measure a PSR, or may also summarize a set of probes that are supposed to span an exon-exon junction
+	- analyzing the data at this level is very complex: any significantly differentially expressed PSR or JUC (junction probe) just says something about a little chunk of the gene, and what that then means in the larger context of the gene is something that you have to explore further.
+* __transcript clusters__: contain all probe sets of a _transcript_
+	- there may be multiple transcript probesets for a given gene
+	- given the propensity for Affy to re-use probes in the later versions of arrays, the multiple probesets for a given gene may well include some of the same probes!
+	- the transcript level probesets provide some relative measure of the underlying transcription level of a gene
+	- different probesets for the same gene may measure different splice variants.
+
+[Ref1](https://www.biostars.org/p/12180/)
+[Ref2](https://support.bioconductor.org/p/89308/)
+
+[Stephen Turner](http://www.statsblogs.com/2012/01/17/annotating-limma-results-with-gene-names-for-affy-microarrays/) has a blog entry on how to do the annotation before the limma analysis; he uses transcript clusters (= gene-level analysis)
+
+## DE Analysis
+
+A very good summary of all the most important steps is given by [James MacDonald at biostars](https://support.bioconductor.org/p/89308/).
+
+```
+library(oligo)
+dat <- read.celfiles(list.celfiles())
+eset <- rma(dat)
+
+## you can then get rid of background probes and annotate using functions in my affycoretools package
+library(affycoretools)
+library(hta20transcriptcluster.db)
+eset.main <- getMainProbes(eset, pd.hta.2.0)
+eset.main <- annotateEset(eset.main, hta20stranscriptcluster.db)
+```
+
+For probe-set level analysis:
+
+```
+eset <- rma(dat, target = "probeset")
+eset.main <- getMainProbes(eset, pd.hta.2.0)
+eset.main <- annotateEset(eset.main, hta20probeset.db)
+```
+
 -----------------------------------------------
 
 <a name="affy"></a>
