@@ -7,6 +7,8 @@ Microarray analysis
 * [Normalizations](#norms)
 * [QC](#qc)
 * [Annotation with gene names](#anno)
+	* [Tx cluster vs. probe set level](#difflevels)
+* [DE analysis](#de)
 * [Affymetrix proprietary software](#affy)
 * [Alternative splicing analysis](#alts)
 * [References](#refs)
@@ -277,6 +279,7 @@ Thermo Fisher provides data bases with the mappings [here](https://www.thermofis
 For an overview of all bioconductor-hosted annotation data bases, see [here](http://www.bioconductor.org/packages/release/BiocViews.html#___AnnotationData).
 For HTA2.0, there are two options: [transcript clusters](http://www.bioconductor.org/packages/release/data/annotation/manuals/hta20transcriptcluster.db/man/hta20transcriptcluster.db.pdf) and [probe sets](http://www.bioconductor.org/packages/release/data/annotation/manuals/hta20probeset.db/man/hta20probeset.db.pdf)
 
+<a name="difflevels"></a>
 * __probe sets__: for HTA2.0, a probe set is more are less an exon, but not quite
 	- old Exon ST arrays had four-probe probesets (e.g., four 25-mers that were summarized to estimate the expression of a 'probe set region', or PSR). A PSR was some or all of an exon, so it wasn't even that clear what you were measuring. If the exon was long, there might have been multiple PSRs for the exon, or if it was short maybe only one.
 	- when you summarize at the probeset level on the HTA arrays, you are summarizing all the probes in a probeset, which may measure a PSR, or may also summarize a set of probes that are supposed to span an exon-exon junction
@@ -287,11 +290,12 @@ For HTA2.0, there are two options: [transcript clusters](http://www.bioconductor
 	- the transcript level probesets provide some relative measure of the underlying transcription level of a gene
 	- different probesets for the same gene may measure different splice variants.
 
-[Ref1](https://www.biostars.org/p/12180/)
+[Ref1](https://www.biostars.org/p/12180/),
 [Ref2](https://support.bioconductor.org/p/89308/)
 
 [Stephen Turner](http://www.statsblogs.com/2012/01/17/annotating-limma-results-with-gene-names-for-affy-microarrays/) has a blog entry on how to do the annotation before the limma analysis; he uses transcript clusters (= gene-level analysis)
 
+<a name="de"></a>
 ## DE Analysis
 
 A very good summary of all the most important steps is given by [James MacDonald at biostars](https://support.bioconductor.org/p/89308/).
@@ -308,7 +312,7 @@ eset.main <- getMainProbes(eset, pd.hta.2.0)
 eset.main <- annotateEset(eset.main, hta20stranscriptcluster.db)
 ```
 
-For probe-set level analysis:
+For probe-set level analysis (see caveats above!):
 
 ```
 eset <- rma(dat, target = "probeset")
