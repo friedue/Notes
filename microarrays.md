@@ -1,6 +1,19 @@
 Microarray analysis
 =====================
 
+* [MA Platforms](#platforms)
+* [File Formats](#fileformats)
+* [R packages](#packages)
+* [Normalizations](#norms)
+* [QC](#qc)
+* [Annotation with gene names](#anno)
+* [Affymetrix proprietary software](#affy)
+* [Alternative splicing analysis](#alts)
+* [References](#refs)
+
+---------------------------------
+
+<a name="platforms"></a>
 There are two types of MA platforms:
 
 * spotted array -- 2 colors
@@ -18,6 +31,7 @@ Typically used microarrays:
 
 ![from https://bioinformatics.cancer.gov/sites/default/files/course_material/Btep-R-microA-presentation-Jan-Feb-2015.pdf](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_types.png)
 
+<a name="fileformats"></a>
 ## File formats of microarrays
 
 * `.CEL`: Expression Array feature intensity
@@ -28,6 +42,7 @@ Typically used microarrays:
 
 ![](https://raw.githubusercontent.com/friedue/Notes/master/images/MA_mapping.png)
 
+<a name="packages"></a>
 ## Packages
 
 * `oligo` 
@@ -63,6 +78,7 @@ Which one to use?
 > Each gene annotation is constructed from transcript annotations from one or more confidence levels. Some parts of a gene annotation may
  derive from high confidence core annotations, while other parts derive from the lower confidence extended or full annotations. [White Paper Probe Sets II](http://tools.thermofisher.com/content/sfs/brochures/exon_probeset_trans_clust_whitepaper.pdf)
 
+<a name="norms"></a>
 #### Normalization methods
 
 ##### MAS5
@@ -112,6 +128,7 @@ PLIER is the proprietory (?) algorithm of Affymetrix/Thermo Fisher; Table taken 
 [White Paper Probe Sets A](http://tools.thermofisher.com/content/sfs/brochures/exon_gene_signal_estimate_whitepaper.pdf) |
 [White Paper Probe Sets B](http://tools.thermofisher.com/content/sfs/brochures/exon_probeset_trans_clust_whitepaper.pdf)
 
+<a name="qc"></a>
 ## QC
 
 According to [McCall et al., 2011](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-137), the most useful QC measures for identifying poorly performing arrays are:
@@ -250,6 +267,7 @@ Determine the fraction of the total variation of the samples can be explained by
 4. The _residual sum of squares_ (where the sum over j represents the  sum over samples within the  attribute level) is accumulated.
 5. The fraction of variance explained for the attribute is the _mean of the fraction explained_ over all of the probesets.
 
+<a name="anno"></a>
 ## Annotating probes with gene names
 
 Thermo Fisher provides data bases with the mappings [here](https://www.thermofisher.com/us/en/home/life-science/microarray-analysis/microarray-data-analysis/genechip-array-annotation-files.html)
@@ -259,8 +277,9 @@ Thermo Fisher provides data bases with the mappings [here](https://www.thermofis
 For an overview of all bioconductor-hosted annotation data bases, see [here](http://www.bioconductor.org/packages/release/BiocViews.html#___AnnotationData).
 For HTA2.0, there are two options: [transcript clusters](http://www.bioconductor.org/packages/release/data/annotation/manuals/hta20transcriptcluster.db/man/hta20transcriptcluster.db.pdf) and [probe sets](http://www.bioconductor.org/packages/release/data/annotation/manuals/hta20probeset.db/man/hta20probeset.db.pdf)
 
-0-----------------------------------------------
+-----------------------------------------------
 
+<a name="affy"></a>
 ## Affymetrix' TAC 
 
 * Affymetrix' software (Windows only)
@@ -278,6 +297,7 @@ For HTA2.0, there are two options: [transcript clusters](http://www.bioconductor
 	- [Thermo Fisher White Paper](http://tools.thermofisher.com/content/sfs/brochures/exon_gene_arrays_qa_whitepaper.pdf)
 	- PCA  
 
+<a name="alts"></a>
 ## Alternative splicing
 
 - **EventPointer**
@@ -286,6 +306,8 @@ For HTA2.0, there are two options: [transcript clusters](http://www.bioconductor
 	- [code at github](https://github.com/jpromeror/EventPointer)
 	- [Example Data](https://www.dropbox.com/sh/wpwz1jx0l112icw/AAD4yrEY4HG1fExUmtoBmrOWa/HTA%202.0?dl=0) including GTF file
 
+
+<a name="refs"></a>
 ## References
 
 * [JR Stevens 2012](www.math.usu.edu/~jrstevens/stat5570/1.4.Preprocess.pdf)
