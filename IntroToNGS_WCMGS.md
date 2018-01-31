@@ -13,6 +13,8 @@ Typical biological questions to be addressed with the help of high-throughput DN
 * ...
 * ...
 
+![](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/biology-02-00378-g001.jpg)
+
 The general workflow of any experiment based on high-throughput DNA sequencing involves the following steps:
 
 1. **Sample prepration** This step is usually done by the molecular biologist.
