@@ -70,9 +70,9 @@ Technical replicates are therefore repeated measurements of the same sample whil
 
 ### Self-paced reading and studying
 
-* Points of Significance Series of Nature Methods
-* F100Research: [Channels](https://f1000research.com/gateways) 
+* [Points of Significance Series of Nature Methods](https://www.nature.com/collections/qghhqm/pointsofsignificance)
 * [Michael Love's Intro to Computational Biology](https://biodatascience.github.io/compbio/)
-* ABC's Intro to R
-* ABC's Intro to git
+* F100Research: [Channels](https://f1000research.com/gateways) 
+* Applied Bioinformatics Core's Datacamp Course [Introduction to R](https://www.datacamp.com/courses/abc-intro-2-r)
+* Applied Bioinformatics Core's [Introduction to version control using RStudio](https://www.datacamp.com/courses/abc-intro-2-git-in-rstudio)
 
