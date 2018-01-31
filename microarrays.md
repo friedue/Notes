@@ -34,6 +34,7 @@ Typically used microarrays:
 	- supposed to replace `affy` for the more modern exon-based arrays
 	- for data import and preprocessing
 	- uses `ExpressionSet`
+    - the best intro I found was the [github wiki](https://github.com/benilton/oligoOld/wiki/Getting-the-grips-with-the-oligo-Package)
 
 *  `affy`
 	- very comprehensive, but cannot read in HTA2.0 data
