@@ -37,11 +37,32 @@ These problems can be mitigated, but not completely eliminated, with careful lib
 
 ## Replicates
 
-For many HTS applications, the ultimate goal is to 
+For many HTS applications, the ultimate goal is to find the subset of regions or genes that show differences between the conditions that were analyzed. For example, you may 
+For more details about experimental design considerations, see Section 1.4 of the [Introduction to RNA-seq](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf), [Altman N and Krzywinski M. (2014) Nature Methods, 12(1):5–6, 2014](http://dx.doi.org/10.1038/nmeth.3224), [Blainey et al. (2014) Nature Methods, 1(9) 879–880](https://www.nature.com/articles/nmeth.3091)
+
 
 Technical replicates are therefore repeated measurements of the same sample while biological replicates are parallel measurements of biologically distinct samples that capture random biological variation 
 
-Blainey et al. (2014) Nature Methods, 1(9) 879–880 (https://www.nature.com/articles/nmeth.3091)
-
 
 ![](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/replicates.png)
+
+## Helpful references and additional material
+
+### Classes, workshops, hands-on help at WCM
+
+* Q-Bi0
+* Intro to UNIX
+* Intro to R
+* Intro to RNA-seq analysis
+
+* Walk-in clinic
+* d:bug
+
+### Self-paced reading and studying
+
+* Points of Significance Series of Nature Methods
+* F100Research: [Channels](https://f1000research.com/gateways) 
+* [Michael Love's Intro to Computational Biology](https://biodatascience.github.io/compbio/)
+* ABC's Intro to R
+* ABC's Intro to git
+
