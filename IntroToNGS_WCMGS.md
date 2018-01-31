@@ -43,6 +43,10 @@ What type of starting material is needed depends on the type of assay. For RNA-s
 <a name="infrastructure"></a>
 ## WCM's infrastructure for high-throughput DNA sequencing experiments
 
+* Sequencing and basic data processing: Epigenomics Core, Genomics Core
+* Analysis: Applied Bioinformatics Core
+* Administration of storage and high-performance computing servers: Scientific Computing Unit
+
 <a name="design"></a>
 ## Parameters to consider for experimental design
 
