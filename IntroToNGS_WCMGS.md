@@ -3,8 +3,9 @@ Contents
 
 * [Overview](#overview)
 * [WCM's infrastructure](#infrastructure)
-* [Parameters to consider for experimental design](#design)
+* [Parameters to consider for planning the experiment](#params)
 	- [How many and what type of replicates?](#reps)
+	- [Experimental design](#design)
 * [Classes, workshops, hands-on help at WCM](#courses)
 	- [Self-paced reading and studying](#refs)
     
@@ -45,7 +46,7 @@ What type of starting material is needed depends on the type of assay. For RNA-s
 * Analysis: Applied Bioinformatics Core
 * Administration of storage and high-performance computing servers: Scientific Computing Unit
 
-<a name="design"></a>
+<a name="params"></a>
 ## Parameters to consider for the experiment
 
 * appropriate control samples (e.g. input samples for ChIP-seq)
@@ -78,10 +79,13 @@ Ideally, you should have hundreds of measurements, but practically, this will no
 
 ![](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/replicates.png)
 
+<a name="design"></a>
 ### Experimental design considerations 
 
 The major rule is: **Block what you can, randomize what you cannot.**
+In practice, this means that you should try to keep the technical nuisance factors (e.g. cell harvest date, RNA/DNA extraction method, sequencing date, ...) to a minimum, i.e., try to be as consistent as possible. If you cannot harvest all the cells on the same day, make sure you do not confound parameters of interest with technical factors, i.e., absolutely avoid processing all, say, wild type samples on day 1 and all mutant samples on day 2. 
 
+Don't overthink it (fully blocked design is simply not feasible), but make sure that the factors of interest are clear. This also means communicating with the sequencing core about how to randomize technical variation appropriately and in accordance with your experiment's design.
 The classic paper by [Auer & Doerge](http://dx.doi.org/10.1534/genetics.110.114983) established the rules of balanced experimental design while leveraging the features of typical high-throughput DNA sequencing platforms.
 The following figure is taken from their paper:
 
