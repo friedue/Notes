@@ -7,18 +7,24 @@ Efficient processing, storage and retrieval of large-scale sequencing data sets 
 
 ## Overview
 
+Typical biological questions to be addressed with the help of high-throughput DNA sequencing:
+
+* Do gene expression patterns change between two (or more) different conditions?
+* ...
+* ...
+
 The general workflow of any experiment based on high-throughput DNA sequencing involves the following steps:
 
 1. **Sample prepration** This step is usually done by the molecular biologist.
 What type of starting material is needed depends on the type of assay. For RNA-seq, this would include RNA extraction from all samples of interest; for eRRBS, WGBS, exome-sequencing etc. DNA will have to be extracted; for ChIP-seq, chromatin will be purified, immunoprecipitated and eventually fragmented into small DNA pieces; and so on.
 2. **Sequencing (biochemistry)**
-  1. Library preparation: the RNA or DNA fragments delivered to the sequencing core are (highly) amplified, and ligated to the adapters and primers that are needed for sequencing
-  2. Sequencing-by-synthesis: the libraries are loaded onto the lanes of a flow cell, in which the base pair order of every DNA fragment is determined using distinct fluorescent dyes for ever nucleotide (for more details, see Section 1.3 of the [Introduction to RNA-seq](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf)
-3. Bioinformatics
-  1. Processing of sequencing reads (including alignment)
-  2. Estimation of individual gene expression levels
-  3. Normalization
-  4. Identification of differentially expressed (DE) genes
+    1. *Library preparation*: the RNA or DNA fragments delivered to the sequencing core are (highly) amplified, and ligated to the adapters and primers that are needed for sequencing
+    2. *Sequencing-by-synthesis*: the libraries are loaded onto the lanes of a flow cell, in which the base pair order of every DNA fragment is determined using distinct fluorescent dyes for ever nucleotide (for more details, see Section 1.3 of the [Introduction to RNA-seq](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf) )
+3. **Bioinformatics**
+    1. Quality control and processing of the raw sequencing reads, e.g., trimming of excess adapter sequences
+    2. Read alignment and QC
+    3. Additional processing, e.g. normalization to account for differences in sequencing depth (= total numbers of reads) per sample
+    4. Downstream analyses, e.g. identification of differentially expressed genes (RNA-seq); peak calling (ChIP-seq); differentially methylated regions (eRRBS, WGBS); sequence variants (exome-seq); and so on
 
 Typical problems of Illumina-based sequencing data are:
 
@@ -28,6 +34,8 @@ Typical problems of Illumina-based sequencing data are:
 These problems can be mitigated, but not completely eliminated, with careful library preparation and frequent updates of Illumina's machines and chemistry.
 
 ## Replicates
+
+For many HTS applications, the ultimate goal is to 
 
 Technical replicates are therefore repeated measurements of the same sample while biological replicates are parallel measurements of biologically distinct samples that capture random biological variation 
 
