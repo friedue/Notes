@@ -13,7 +13,9 @@ Contents
 
 >Efficient analysis and interpretation of Big Data opens new avenues to explore molecular biology, new questions to ask about physiological and pathological states, and new ways to answer these open issues. Such analyses lead to better understanding of diseases and development of better and personalized diagnostics and therapeutics. However, such progresses are directly related to the availability of new solutions to deal with this huge amount of information. New paradigms are needed to store and access data, for its annotation and integration and finally for inferring knowledge and making it available to researchers. Bioinformatics can be viewed as the “glue” for all these processes.
 
-The ABC has compiled a comprehensive introduction into the principles of high-throughput DNA sequencing and the details of the bioinformatics processing and analyses with a focus on conventional RNA-seq. The course notes can be found [here](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf). The following paragraphs are very brief summaries of the most important points to consider when thinking about using high-throughput DNA sequencing experiments in your own work.
+The Applied Bioinformatics Core has compiled a comprehensive introduction into the principles of high-throughput DNA sequencing and the details of the bioinformatics processing and analyses with a focus on conventional RNA-seq. The course notes can be found [here](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf). 
+
+The following paragraphs are very brief summaries of the most important points to consider when thinking about using high-throughput DNA sequencing experiments in your own work.
 
 <a name="overview"></a>
 ## Overview
@@ -42,9 +44,9 @@ What type of starting material is needed depends on the type of assay. For RNA-s
 <a name="infrastructure"></a>
 ## WCM's infrastructure for high-throughput DNA sequencing experiments
 
-* Sequencing and basic data processing: Epigenomics Core, Genomics Core
-* Analysis: Applied Bioinformatics Core
-* Administration of storage and high-performance computing servers: Scientific Computing Unit
+* **Sequencing** and basic data processing: Epigenomics Core, Genomics Core
+* **Analysis**: Applied Bioinformatics Core
+* **Storage and high-performance computing servers**: Scientific Computing Unit
 	- if you already have an account with the SCU, you can use their extensive [Wiki page](https://pbtech.med.cornell.edu/pbwiki/index.php/Main_Page) to find out more about their resources (e.g., [Using WCM's cluster computing resources](https://pbtech.med.cornell.edu/pbwiki/upload/6/64/Sge-tutorial.pdf)
 
 <a name="params"></a>
@@ -108,6 +110,8 @@ For more experienced coders and programmers, you may be interested to join the m
 
 <a name="refs"></a>
 ### Self-paced reading and studying
+
+The Epigenomics Core has compiled [detailed information](http://epicore.med.cornell.edu/services.php) about the different types of -seq experiments they're performing. 
 
 **Online courses**:
 
