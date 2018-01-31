@@ -45,6 +45,7 @@ What type of starting material is needed depends on the type of assay. For RNA-s
 * Sequencing and basic data processing: Epigenomics Core, Genomics Core
 * Analysis: Applied Bioinformatics Core
 * Administration of storage and high-performance computing servers: Scientific Computing Unit
+	- if you already have an account with the SCU, you can use their extensive [Wiki page](https://pbtech.med.cornell.edu/pbwiki/index.php/Main_Page) to find out more about their resources (e.g., [Using WCM's cluster computing resources](https://pbtech.med.cornell.edu/pbwiki/upload/6/64/Sge-tutorial.pdf)
 
 <a name="params"></a>
 ## Parameters to consider for the experiment
