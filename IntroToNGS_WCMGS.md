@@ -5,14 +5,12 @@ Contents
 * [WCM's infrastructure](#infrastructure)
 * [Parameters to consider for experimental design](#design)
 	- [How many and what type of replicates?](#reps)
-* [ Classes, workshops, hands-on help at WCM(#courses)
+* [Classes, workshops, hands-on help at WCM](#courses)
 	- [Self-paced reading and studying](#refs)
     
  ---------------------------------------------
 
 >Efficient analysis and interpretation of Big Data opens new avenues to explore molecular biology, new questions to ask about physiological and pathological states, and new ways to answer these open issues. Such analyses lead to better understanding of diseases and development of better and personalized diagnostics and therapeutics. However, such progresses are directly related to the availability of new solutions to deal with this huge amount of information. New paradigms are needed to store and access data, for its annotation and integration and finally for inferring knowledge and making it available to researchers. Bioinformatics can be viewed as the “glue” for all these processes.
-
-Efficient processing, storage and retrieval of large-scale sequencing data sets are crucially important for modern 'big-data-driven' life science. 
 
 The ABC has compiled a comprehensive introduction into the principles of high-throughput DNA sequencing and the details of the bioinformatics processing and analyses with a focus on conventional RNA-seq. The course notes can be found [here](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf). The following paragraphs are very brief summaries of the most important points to consider when thinking about using high-throughput DNA sequencing experiments in your own work.
 
@@ -48,7 +46,7 @@ What type of starting material is needed depends on the type of assay. For RNA-s
 * Administration of storage and high-performance computing servers: Scientific Computing Unit
 
 <a name="design"></a>
-## Parameters to consider for experimental design
+## Parameters to consider for the experiment
 
 * appropriate control samples (e.g. input samples for ChIP-seq)
 * number of replicates
@@ -66,15 +64,30 @@ Typical problems of Illumina-based sequencing data are:
 These problems can be mitigated, but not completely eliminated, with careful library preparation (e.g., minimum numbers of PCR cycles, removal of excess primers) and frequent updates of Illumina's machines and chemistry.
 
 <a name="reps"></a>
-### How many and what type of replicates?
+### How many and what types of replicates?
 
-For many HTS applications, the ultimate goal is to find the subset of regions or genes that show differences between the conditions that were analyzed. For example, you may 
-For more details about experimental design considerations, see Section 1.4 of the [Introduction to RNA-seq](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf), [Altman N and Krzywinski M. (2014) Nature Methods, 12(1):5–6, 2014](http://dx.doi.org/10.1038/nmeth.3224), [Blainey et al. (2014) Nature Methods, 1(9) 879–880](https://www.nature.com/articles/nmeth.3091)
+For many HTS applications, the ultimate goal is to find the subset of regions or genes that show differences between the conditions that were analyzed. Conventional RNA-seq analysis, for example, can be used to interrogate thousands of genes at the same time, but the question you're asking for every gene is the same: is there a significant difference in expression between the two (or more) conditions?
 
+In order to be somewhat confident that the expression levels (or enrichment levels or methylation levels -- or whatever type of biological signal you were interested in) you're comparing are not just reflecting normal biological variation, but are indeed a consequence of the experimental condition, you will need to have more than one measurement per locus.
+Ideally, you should have hundreds of measurements, but practically, this will not be feasible due to financial and other constraints. You will therefore have to find a compromise between the number of samples you can afford to prepare and sequence and the number of samples you think you will need to gauge the variation in your system. 
 
-Technical replicates are therefore repeated measurements of the same sample while biological replicates are parallel measurements of biologically distinct samples that capture random biological variation 
+![](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/replicates2.png)
+
+**Technical replicates** are repeated measurements of the *same* sample.
+**Biological replicates** are parallel measurements of biologically *distinct* samples that capture random biological variation 
 
 ![](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/replicates.png)
+
+### Experimental design considerations 
+
+The major rule is: **Block what you can, randomize what you cannot.**
+
+The classic paper by [Auer & Doerge](http://dx.doi.org/10.1534/genetics.110.114983) established the rules of balanced experimental design while leveraging the features of typical high-throughput DNA sequencing platforms.
+The following figure is taken from their paper:
+
+![](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/AuerDoerge2010.png)
+
+For more details about experimental design considerations, see Section 1.4 of the [Introduction to RNA-seq](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf), Altman N and Krzywinski M. (2014) [Nature Methods, 12(1):5–6, 2014](http://dx.doi.org/10.1038/nmeth.3224), and Blainey et al. (2014) [Nature Methods, 1(9) 879–880](https://www.nature.com/articles/nmeth.3091).
 
 <a name="courses"></a>
 ## Classes, workshops, hands-on help at WCM
