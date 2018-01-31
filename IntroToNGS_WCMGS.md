@@ -60,13 +60,14 @@ Technical replicates are therefore repeated measurements of the same sample whil
 
 ### Classes, workshops, hands-on help at WCM
 
-* Q-Bi0
-* Intro to UNIX
-* Intro to R
-* Intro to RNA-seq analysis
+Every Thursday, the Applied Bioinformatics Core offers weekly [Bioinformatics Walk-in Clinic](https://abc.med.cornell.edu/ABC_Clinic.pdf) -- for questions about experimental design and data analysis.
 
-* Walk-in clinic
-* d:bug
+* Q-Bio
+* TRI-I workshops taught by personnel of the [Applied Bioinformatics Core](https://abc.med.cornell.edu):
+    - Introduction to UNIX ([schedule](http://www.trii.org/courses/), [course notes](http://chagall.med.cornell.edu/UNIXcourse/))
+    - Intro to differential gene expression analysis using RNA-seq ([schedule](http://www.trii.org/courses/), [course notes](http://chagall.med.cornell.edu/RNASEQcourse/) )
+
+For more experienced coders and programmers, you may be interested to join the mailing list of [d:bug](https://github.com/abcdbug/dbug) to stay up-to-date with cool packages and state-of-the-art data science tips.
 
 ### Self-paced reading and studying
 
