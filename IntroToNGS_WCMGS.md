@@ -23,17 +23,27 @@ What type of starting material is needed depends on the type of assay. For RNA-s
     1. *Library preparation*: the RNA or DNA fragments delivered to the sequencing core are (highly) amplified, and ligated to the adapters and primers that are needed for sequencing
     2. *Sequencing-by-synthesis*: the libraries are loaded onto the lanes of a flow cell, in which the base pair order of every DNA fragment is determined using distinct fluorescent dyes for ever nucleotide (for more details, see Section 1.3 of the [Introduction to RNA-seq](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf) )
 3. **Bioinformatics**
-    1. Quality control and processing of the raw sequencing reads, e.g., trimming of excess adapter sequences
-    2. Read alignment and QC
-    3. Additional processing, e.g. normalization to account for differences in sequencing depth (= total numbers of reads) per sample
+    1. Quality control and *processing* of the raw sequencing reads, e.g., trimming of excess adapter sequences
+    2. Read *alignment* and QC
+    3. Additional *processing*, e.g. normalization to account for differences in sequencing depth (= total numbers of reads) per sample
     4. Downstream analyses, e.g. identification of differentially expressed genes (RNA-seq); peak calling (ChIP-seq); differentially methylated regions (eRRBS, WGBS); sequence variants (exome-seq); and so on
+
+### Parameters to consider for experimental design
+
+* appropriate control samples (e.g. input samples for ChIP-seq)
+* number of replicates
+* read length
+* PE vs. SR
+* poly-A enrichment vs. ribosomal depletion
+* strand information
+
 
 Typical problems of Illumina-based sequencing data are:
 
 * PCR artifacts such as duplicated fragments, lack of fragments with very high or very low GC content and biases towards shorter read lengths
 * sequencing errors and mis-identified bases
 
-These problems can be mitigated, but not completely eliminated, with careful library preparation and frequent updates of Illumina's machines and chemistry.
+These problems can be mitigated, but not completely eliminated, with careful library preparation (e.g., minimum numbers of PCR cycles, removal of excess primers) and frequent updates of Illumina's machines and chemistry.
 
 ## Replicates
 
