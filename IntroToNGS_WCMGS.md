@@ -90,8 +90,9 @@ For many HTS applications, the ultimate goal is to find the subset of regions or
 
 In order to be somewhat confident that the expression levels (or enrichment levels or methylation levels -- or whatever type of biological signal you were interested in) you're comparing are not just reflecting normal biological variation, but are indeed a consequence of the experimental condition, you will need to have more than one measurement per locus.
 Ideally, you should have hundreds of measurements, but practically, this will not be feasible due to financial and other constraints. You will therefore have to find a compromise between the number of samples you can afford to prepare and sequence and the number of samples you think you will need to gauge the variation in your system. 
+The next figure illustrates how the assessment of a single locus (her called "Rando1A") changes depending on how many and which (!) samples were analyzed (note that all values come from the _same_ distribution that were arbitrarily assigned to either "sample type").
 
-![](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/replicates2.png)
+!["Replicates matter"](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/replicates2.png)
 
 **Technical replicates** are repeated measurements of the *same* sample.
 **Biological replicates** are parallel measurements of biologically *distinct* samples that capture random biological variation 
