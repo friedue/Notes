@@ -47,7 +47,7 @@ What type of starting material is needed depends on the type of assay. For RNA-s
 
 WCM offers assistance for virtually every step that's needed for the successful implementation and interpretation of experiments involving high-throughput DNA sequencing.
 
-* **Sequencing** and basic data processing: [Genomics Core](), [Epigenomics Core](http://epicore.med.cornell.edu/)
+* **Sequencing** and basic data processing: Genomics Core, [Epigenomics Core](http://epicore.med.cornell.edu/)
 * **Analysis**: [Applied Bioinformatics Core](abc.med.cornell.edu)
 * **Storage and high-performance computing servers**: Scientific Computing Unit
 	
