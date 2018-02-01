@@ -27,12 +27,14 @@ The following figure taken from [Frese et al., 2013](http://www.mdpi.com/2079-77
 
 ![](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/biology-02-00378-g001.jpg)
 
+For more details about the different high-throughput sequencing platforms and applications, see [Goodwin et al., 2016](http://dx.doi.org/10.1038/nrg.2016.49) and [Reuter et al., 2015](https://www.sciencedirect.com/science/article/pii/S1097276515003408).
+
 The general workflow of any experiment based on high-throughput DNA sequencing involves the following steps:
 
 1. **Sample prepration** This step is usually done by the molecular biologist.
 What type of starting material is needed depends on the type of assay. For RNA-seq, this would include RNA extraction from all samples of interest; for eRRBS, WGBS, exome-sequencing etc. DNA will have to be extracted; for ChIP-seq, chromatin will be purified, immunoprecipitated and eventually fragmented into small DNA pieces; and so on.
 2. **Sequencing**
-    1. *Library preparation*: the RNA or DNA fragments delivered to the sequencing core are (highly) amplified, and ligated to the adapters and primers that are needed for sequencing
+    1. *Library preparation*: the RNA or DNA fragments delivered to the sequencing facility are (highly) amplified, and ligated to the adapters and primers that are needed for sequencing
     2. *Sequencing-by-synthesis*: the libraries are loaded onto the lanes of a flow cell, in which the base pair order of every DNA fragment is determined using distinct fluorescent dyes for ever nucleotide (for more details, see Section 1.3 of the [Introduction to RNA-seq](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf) )
 3. **Bioinformatics**
     1. Quality control and *processing* of the raw sequencing reads, e.g., trimming of excess adapter sequences
@@ -51,16 +53,22 @@ WCM offers assistance for virtually every step that's needed for the successful 
 	
 ![WCM Infrastructure](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/wcm_schema.png)
 
+We highly recommend to get in touch with the Core Facilities in order to work out the details of your own experiment.
+There are many parameters that can be tuned and optimized; the following paragraphs are meant to give you a brief glimpse into some of the major aspects that should be considered _before_ actually preparing your samples.
+
+The Epigenomics Core also compiled [detailed information](http://epicore.med.cornell.edu/services.php) about the different assays they're offering.
+
 <a name="params"></a>
-## Parameters to consider for the experiment
+### Parameters to consider for the experiment
+
+Here are some of the most important things to think about:
 
 * appropriate control samples (e.g. input samples for ChIP-seq)
 * number of replicates
-* read length
-* PE vs. SR
-* poly-A enrichment vs. ribosomal depletion
-* strand information
-
+* sequencing read length
+* paired-end sequencing or single reads
+* specific library preparations, e.g. poly-A enrichment vs. ribosomal depletion for RNA-seq, size range of the fragments to be amplified etc.
+* strand information is typically lost, but can be preserved it needed
 
 Typical problems of Illumina-based sequencing data are:
 
@@ -68,6 +76,14 @@ Typical problems of Illumina-based sequencing data are:
 * sequencing errors and mis-identified bases
 
 These problems can be mitigated, but not completely eliminated, with careful library preparation (e.g., minimum numbers of PCR cycles, removal of excess primers) and frequent updates of Illumina's machines and chemistry.
+
+In addition, there are inherent limitations that are still not overcome:
+
+* short reads -- regions with lots of repetitive regions will be virtually impossible to see with typical read lengths of 100 bp
+* the data will most likely be only as good as the reference genome
+* statistical analysis of many applications has not caught up with the speed at which new assays are being developed -- gold standards of analysis exist for very few applications and many analyses are still hotly debated in the bioinformatics community (e.g., identification of broad histone mark enrichments, single cell RNA-seq analysis, isoform quantification, de novo transcript discovery (including lncRNA), ...)
+
+**There may be questions that are not best addressed with Illumina's sequencing platform!**
 
 <a name="reps"></a>
 ### How many and what types of replicates?
@@ -101,33 +117,40 @@ For more details about experimental design considerations, see Section 1.4 of th
 <a name="courses"></a>
 ## Classes, workshops, hands-on help at WCM
 
-Every Thursday, the Applied Bioinformatics Core offers weekly [Bioinformatics Walk-in Clinic](https://abc.med.cornell.edu/ABC_Clinic.pdf) -- for questions about experimental design and data analysis.
+WCM is part of a vibrant community of computational biologists and DNA sequencing experts!
+
+**Meetings**:
+
+Every Thursday, the Applied Bioinformatics Core offers weekly [Bioinformatics Walk-in Clinic](https://abc.med.cornell.edu/ABC_Clinic.pdf) -- for all your questions about experimental design and data analysis!
+
+For more experienced coders and programmers, you may be interested to join the mailing list of [d:bug](https://github.com/abcdbug/dbug) to stay up-to-date with cool packages and state-of-the-art data science tips.
+
+**Classes**:
 
 * Q-Bio
 * TRI-I workshops taught by personnel of the [Applied Bioinformatics Core](https://abc.med.cornell.edu):
     - Introduction to UNIX ([schedule](http://www.trii.org/courses/), [course notes](http://chagall.med.cornell.edu/UNIXcourse/))
     - Intro to differential gene expression analysis using RNA-seq ([schedule](http://www.trii.org/courses/), [course notes](http://chagall.med.cornell.edu/RNASEQcourse/) )
 
-For more experienced coders and programmers, you may be interested to join the mailing list of [d:bug](https://github.com/abcdbug/dbug) to stay up-to-date with cool packages and state-of-the-art data science tips.
-
 <a name="refs"></a>
 ### Self-paced reading and studying
 
 The Epigenomics Core has compiled [detailed information](http://epicore.med.cornell.edu/services.php) about the different types of -seq experiments they're performing. 
 
-**Online courses**:
+#### Online courses
 
 * Applied Bioinformatics Core's Datacamp Course [Introduction to R](https://www.datacamp.com/courses/abc-intro-2-r)
 * Applied Bioinformatics Core's [Introduction to version control using RStudio](https://www.datacamp.com/courses/abc-intro-2-git-in-rstudio)
 * [Michael Love's Intro to Computational Biology](https://biodatascience.github.io/compbio/)
 
-**Articles**
+#### Articles
 
 * An excellent overview of the different sequencing techniques and applications: ["Coming of age: ten years of next- generation sequencing technologies"](http://dx.doi.org/10.1038/nrg.2016.49)
+* A good summary of sequencing platforms including publicly available data: ["High-throughput sequencing"](http://www.cell.com/molecular-cell/fulltext/S1097-2765(15)00340-8)
 * Nature Methods has compiled a great selection of brief introductions into many statistical concepts that biologists should be familiar with, such as p-value calculations, replicate handling, visualizations etc.: [Points of Significance Series](https://www.nature.com/collections/qghhqm/pointsofsignificance)
 * F100Research: [Channels](https://f1000research.com/gateways) 
 
-**Community**
+#### Community
 
-* Biostars
-* Seqanswers
+* [Biostars](https://www.biostars.org/)
+* [Seqanswers](http://seqanswers.com/forums/index.php)
