@@ -1,5 +1,13 @@
-Contents
----------
+
+In the last decade, extraordinary advances in high-throughput DNA sequencing have laid the foundation for addressing molecular questions at a genome-wide scale. Instead of investigating one locus at a time, researchers can now acquire data covering the entire genome in one single experiment. 
+While these data sets can assist the elucidation of complex biological systems and diseases, they also require sophisticated solutions for data storage, processing, analysis and interpretation. Simply put: you won't get very far with Excel spreadsheets if you're looking at 30,000 genes at a time -- and to arrive at biologically meaningful values for 30,000 genes it takes a lot of data wrangling and processing!
+
+At WCM, several Core Facilities exist to enable researchers to take full advantage of the cutting-edge research possibilities related to high-throughput DNA sequencing experiments, ranging from optimized protocols for the different types of sequencing-related assays to high-performance computing environments and bioinformatics support.
+We strongly encourage you to tap into their expertise to help you set up your own experiments. 
+
+The Applied Bioinformatics Core has compiled a comprehensive introduction into the principles of high-throughput DNA sequencing and the details of the bioinformatics processing and analyses with a focus on conventional RNA-seq. The course notes can be found [here](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf). 
+
+The following paragraphs are very brief summaries of the most important points to consider when thinking about using high-throughput DNA sequencing experiments in your own work.
 
 * [Overview](#overview)
 * [WCM's infrastructure](#infrastructure)
@@ -8,23 +16,14 @@ Contents
 	- [Experimental design](#design)
 * [Classes, workshops, hands-on help at WCM](#courses)
 	- [Self-paced reading and studying](#refs)
-    
- ---------------------------------------------
-
->Efficient analysis and interpretation of Big Data opens new avenues to explore molecular biology, new questions to ask about physiological and pathological states, and new ways to answer these open issues. Such analyses lead to better understanding of diseases and development of better and personalized diagnostics and therapeutics. However, such progresses are directly related to the availability of new solutions to deal with this huge amount of information. New paradigms are needed to store and access data, for its annotation and integration and finally for inferring knowledge and making it available to researchers. Bioinformatics can be viewed as the “glue” for all these processes.
-
-The Applied Bioinformatics Core has compiled a comprehensive introduction into the principles of high-throughput DNA sequencing and the details of the bioinformatics processing and analyses with a focus on conventional RNA-seq. The course notes can be found [here](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf). 
-
-The following paragraphs are very brief summaries of the most important points to consider when thinking about using high-throughput DNA sequencing experiments in your own work.
 
 <a name="overview"></a>
 ## Overview
 
-Typical biological questions to be addressed with the help of high-throughput DNA sequencing:
+DNA sequencing is used for far more than actually reading the DNA sequence. The advent of massive parallel DNA sequencing (synonyms: shotgun sequencing, next-generation sequencing) has enabled researchers to do quantitative counting of RNA and DNA molecules, which can be combined with more spophisticated biochemical set-ups allowing the interrogation of active transcription (RNA-seq, PRO-seq, GRO-seq) as well as insights about protein-DNA interactions (ChIP-seq), the 3D structure of chromatin (ChIA-PET, ChIP-seq), and many more.
+Even antibody-stainings typically used for FACS analyses can now be translated into DNA reads (CITE-seq).
 
-* Do gene expression patterns change between two (or more) different conditions?
-* ...
-* ...
+The following figure taken from []() highlights some of the most commonly applied seq-based applications:
 
 ![](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/biology-02-00378-g001.jpg)
 
@@ -32,7 +31,7 @@ The general workflow of any experiment based on high-throughput DNA sequencing i
 
 1. **Sample prepration** This step is usually done by the molecular biologist.
 What type of starting material is needed depends on the type of assay. For RNA-seq, this would include RNA extraction from all samples of interest; for eRRBS, WGBS, exome-sequencing etc. DNA will have to be extracted; for ChIP-seq, chromatin will be purified, immunoprecipitated and eventually fragmented into small DNA pieces; and so on.
-2. **Sequencing (biochemistry)**
+2. **Sequencing**
     1. *Library preparation*: the RNA or DNA fragments delivered to the sequencing core are (highly) amplified, and ligated to the adapters and primers that are needed for sequencing
     2. *Sequencing-by-synthesis*: the libraries are loaded onto the lanes of a flow cell, in which the base pair order of every DNA fragment is determined using distinct fluorescent dyes for ever nucleotide (for more details, see Section 1.3 of the [Introduction to RNA-seq](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf) )
 3. **Bioinformatics**
@@ -44,10 +43,13 @@ What type of starting material is needed depends on the type of assay. For RNA-s
 <a name="infrastructure"></a>
 ## WCM's infrastructure for high-throughput DNA sequencing experiments
 
-* **Sequencing** and basic data processing: Epigenomics Core, Genomics Core
-* **Analysis**: Applied Bioinformatics Core
+WCM offers assistance for virtually every step that's needed for the successful implementation and interpretation of experiments involving high-throughput DNA sequencing.
+
+* **Sequencing** and basic data processing: [Genomics Core](), [Epigenomics Core](http://epicore.med.cornell.edu/)
+* **Analysis**: [Applied Bioinformatics Core](abc.med.cornell.edu)
 * **Storage and high-performance computing servers**: Scientific Computing Unit
-	- if you already have an account with the SCU, you can use their extensive [Wiki page](https://pbtech.med.cornell.edu/pbwiki/index.php/Main_Page) to find out more about their resources (e.g., [Using WCM's cluster computing resources](https://pbtech.med.cornell.edu/pbwiki/upload/6/64/Sge-tutorial.pdf)
+	
+![WCM Infrastructure](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/wcm_schema.png)
 
 <a name="params"></a>
 ## Parameters to consider for the experiment
@@ -121,6 +123,7 @@ The Epigenomics Core has compiled [detailed information](http://epicore.med.corn
 
 **Articles**
 
+* An excellent overview of the different sequencing techniques and applications: ["Coming of age: ten years of next- generation sequencing technologies"](http://dx.doi.org/10.1038/nrg.2016.49)
 * Nature Methods has compiled a great selection of brief introductions into many statistical concepts that biologists should be familiar with, such as p-value calculations, replicate handling, visualizations etc.: [Points of Significance Series](https://www.nature.com/collections/qghhqm/pointsofsignificance)
 * F100Research: [Channels](https://f1000research.com/gateways) 
 
