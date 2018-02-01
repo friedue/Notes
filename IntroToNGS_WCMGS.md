@@ -5,8 +5,6 @@ While these data sets can assist the elucidation of complex biological systems a
 At WCM, several Core Facilities exist to enable researchers to take full advantage of the cutting-edge research possibilities related to high-throughput DNA sequencing experiments, ranging from optimized protocols for the different types of sequencing-related assays to high-performance computing environments and bioinformatics support.
 We strongly encourage you to tap into their expertise to help you set up your own experiments. 
 
-The Applied Bioinformatics Core has compiled a comprehensive introduction into the principles of high-throughput DNA sequencing and the details of the bioinformatics processing and analyses with a focus on conventional RNA-seq. The course notes can be found [here](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf). 
-
 The following paragraphs are very brief summaries of the most important points to consider when thinking about using high-throughput DNA sequencing experiments in your own work.
 
 * [Overview](#overview)
