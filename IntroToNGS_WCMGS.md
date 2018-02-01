@@ -133,10 +133,11 @@ For more experienced coders and programmers, you may be interested to join the m
 **Classes**:
 
 * [Quantitative understanding in biology](http://physiology.med.cornell.edu/people/banfelder/qbio/) - review of quantitative techniques with an emphasis on how to select an appropriate statistical test, interpret the results, and design experiments
-* TRI-I workshops taught by personnel of the [Applied Bioinformatics Core](https://abc.med.cornell.edu):
+* Workshops taught by personnel of the [Applied Bioinformatics Core](https://abc.med.cornell.edu):
     - Introduction to UNIX ([schedule](http://www.trii.org/courses/), [course notes](http://chagall.med.cornell.edu/UNIXcourse/))
     - Intro to differential gene expression analysis using RNA-seq ([schedule](http://www.trii.org/courses/), [course notes](http://chagall.med.cornell.edu/RNASEQcourse/) )
-* [Introduction to R](http://chagall.med.cornell.edu/Rcourse/intro2R.pdf)
+    - [Introduction to R](http://chagall.med.cornell.edu/Rcourse/intro2R.pdf)
+ * [Genomics Workshop](http://weill.cornell.edu/ctsc/training_and_education/masters_degree_in_clinical.html) provided by the Genomics Resources Core Facility as part of the Master of Science in Clinical & Translational Investigation 
 
 <a name="refs"></a>
 ### Self-paced reading and studying
