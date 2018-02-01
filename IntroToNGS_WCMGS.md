@@ -106,7 +106,7 @@ Ideally, you should have hundreds of measurements, but practically, this will no
 The major rule is: **Block what you can, randomize what you cannot.**
 In practice, this means that you should try to keep the technical nuisance factors (e.g. cell harvest date, RNA/DNA extraction method, sequencing date, ...) to a minimum, i.e., try to be as consistent as possible. If you cannot harvest all the cells on the same day, make sure you do not confound parameters of interest with technical factors, i.e., absolutely avoid processing all, say, wild type samples on day 1 and all mutant samples on day 2. 
 
-Don't overthink it (fully blocked design is simply not feasible), but make sure that the factors of interest are clear. This also means communicating with the sequencing core about how to randomize technical variation appropriately and in accordance with your experiment's design.
+Don't overthink it (fully blocked design is simply not feasible), but make sure that the factors of interest are clear. This also means communicating with the sequencing facility about how to randomize technical variation appropriately and in accordance with your experiment's design.
 The classic paper by [Auer & Doerge](http://dx.doi.org/10.1534/genetics.110.114983) established the rules of balanced experimental design while leveraging the features of typical high-throughput DNA sequencing platforms.
 The following figure is taken from their paper:
 
@@ -136,6 +136,10 @@ For more experienced coders and programmers, you may be interested to join the m
 ### Self-paced reading and studying
 
 The Epigenomics Core has compiled [detailed information](http://epicore.med.cornell.edu/services.php) about the different types of -seq experiments they're performing. 
+
+The [course notes](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf) accompanying the Applied Bioinformatics Core's RNA-seq class contain a comprehensive introduction into many aspects of high-throughput sequencing data analysis.
+
+An introduction into general ChIP-seq analysis can be found [here](http://deeptools.readthedocs.io/en/latest/content/example_usage.html), including a [Glossary of HTS terms](http://deeptools.readthedocs.io/en/latest/content/help_glossary.html) including the different [file formats](http://deeptools.readthedocs.io/en/latest/content/help_glossary.html#file-formats).
 
 #### Online courses
 
