@@ -23,7 +23,7 @@ The following paragraphs are very brief summaries of the most important points t
 DNA sequencing is used for far more than actually reading the DNA sequence. The advent of massive parallel DNA sequencing (synonyms: shotgun sequencing, next-generation sequencing) has enabled researchers to do quantitative counting of RNA and DNA molecules, which can be combined with more spophisticated biochemical set-ups allowing the interrogation of active transcription (RNA-seq, PRO-seq, GRO-seq) as well as insights about protein-DNA interactions (ChIP-seq), the 3D structure of chromatin (ChIA-PET, ChIP-seq), and many more.
 Even antibody-stainings typically used for FACS analyses can now be translated into DNA reads (CITE-seq).
 
-The following figure taken from []() highlights some of the most commonly applied seq-based applications:
+The following figure taken from [Frese et al., 2013](http://www.mdpi.com/2079-7737/2/1/378) highlights some of the most commonly applied seq-based applications:
 
 ![](https://raw.githubusercontent.com/friedue/Notes/master/images/intro/biology-02-00378-g001.jpg)
 
