@@ -12,7 +12,9 @@ The following paragraphs are very brief summaries of the most important points t
 * [Parameters to consider for planning the experiment](#params)
 	- [How many and what type of replicates?](#reps)
 	- [Experimental design](#design)
-* [Classes, workshops, hands-on help at WCM](#courses)
+* [More resources](#resources)
+	- [Meetings](#meetings)
+	- [Classes at WCM](#courses)
 	- [Self-paced reading and studying](#refs)
 
 <a name="overview"></a>
@@ -113,17 +115,19 @@ The following figure is taken from their paper:
 
 For more details about experimental design considerations, see Section 1.4 of the [Introduction to RNA-seq](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf), Altman N and Krzywinski M. (2014) [Nature Methods, 12(1):5–6, 2014](http://dx.doi.org/10.1038/nmeth.3224), and Blainey et al. (2014) [Nature Methods, 1(9) 879–880](https://www.nature.com/articles/nmeth.3091).
 
-<a name="courses"></a>
-## Classes, workshops, hands-on help at WCM
+<a name="resources"></a>
+## More resources
 
 WCM is part of a vibrant community of computational biologists and DNA sequencing experts!
 
+<a name="meetings"></a>
 **Meetings**:
 
 Every Thursday, the Applied Bioinformatics Core offers weekly [Bioinformatics Walk-in Clinic](https://abc.med.cornell.edu/ABC_Clinic.pdf) -- for all your questions about experimental design and data analysis!
 
 For more experienced coders and programmers, you may be interested to join the mailing list of [d:bug](https://github.com/abcdbug/dbug) to stay up-to-date with cool packages and state-of-the-art data science tips.
 
+<a name="courses"></a>
 **Classes**:
 
 * Q-Bio
