@@ -115,6 +115,8 @@ The following figure is taken from their paper:
 
 For more details about experimental design considerations, see Section 1.4 of the [Introduction to RNA-seq](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf), Altman N and Krzywinski M. (2014) [Nature Methods, 12(1):5–6, 2014](http://dx.doi.org/10.1038/nmeth.3224), and Blainey et al. (2014) [Nature Methods, 1(9) 879–880](https://www.nature.com/articles/nmeth.3091).
 
+For an enlightening read about how even seasoned genomics researchers can fall prey to inadvertend bias, [this paper](https://f1000research.com/articles/4-121/v1) including the comments and discussions is highly recommended.
+
 <a name="resources"></a>
 ## More resources
 
@@ -130,7 +132,7 @@ For more experienced coders and programmers, you may be interested to join the m
 <a name="courses"></a>
 **Classes**:
 
-* Quantitative techniques for the analysis of experimental data: [Q-Bio](http://physiology.med.cornell.edu/people/banfelder/qbio/)
+* [Quantitative understanding in biology](http://physiology.med.cornell.edu/people/banfelder/qbio/) - review of quantitative techniques with an emphasis on how to select an appropriate statistical test, interpret the results, and design experiments
 * TRI-I workshops taught by personnel of the [Applied Bioinformatics Core](https://abc.med.cornell.edu):
     - Introduction to UNIX ([schedule](http://www.trii.org/courses/), [course notes](http://chagall.med.cornell.edu/UNIXcourse/))
     - Intro to differential gene expression analysis using RNA-seq ([schedule](http://www.trii.org/courses/), [course notes](http://chagall.med.cornell.edu/RNASEQcourse/) )
