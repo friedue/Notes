@@ -1,11 +1,10 @@
-
 In the last decade, extraordinary advances in high-throughput DNA sequencing have laid the foundation for addressing molecular questions at a genome-wide scale. Instead of investigating one locus at a time, researchers can now acquire data covering the entire genome in one single experiment. 
-While these data sets can assist the elucidation of complex biological systems and diseases, they also require sophisticated solutions for data storage, processing, analysis and interpretation. Simply put: you won't get very far with Excel spreadsheets if you're looking at 30,000 genes at a time -- and to arrive at biologically meaningful values for 30,000 genes it takes a lot of data wrangling and processing!
+While these data sets can assist the elucidation of complex biological systems and diseases, they also require sophisticated solutions for data storage, processing, analysis and interpretation. Simply put: you won't get very far with Excel spreadsheets if you're looking at 30,000 genes at a time - in fact, to arrive at biologically meaningful values for 30,000 genes to begin looking at alreday takes a lot of data wrangling and processing!
 
 At WCM, several Core Facilities exist to enable researchers to take full advantage of the cutting-edge research possibilities related to high-throughput DNA sequencing experiments, ranging from optimized protocols for the different types of sequencing-related assays to high-performance computing environments and bioinformatics support.
 We strongly encourage you to tap into their expertise to help you set up your own experiments. 
 
-The following paragraphs are very brief summaries of the most important points to consider when thinking about using high-throughput DNA sequencing experiments in your own work.
+The following paragraphs are very brief summaries of the most important points to consider when thinking about using high-throughput DNA sequencing experiments in your own work. They are by no means exhaustive, but they should give you an idea of the possibilities and as well as pitfalls of these types of experiments.
 
 * [Overview](#overview)
 * [WCM's infrastructure](#infrastructure)
@@ -29,7 +28,7 @@ The following figure taken from [Frese et al., 2013](http://www.mdpi.com/2079-77
 
 For more details about the different high-throughput sequencing platforms and applications, see [Goodwin et al., 2016](http://dx.doi.org/10.1038/nrg.2016.49) and [Reuter et al., 2015](https://www.sciencedirect.com/science/article/pii/S1097276515003408).
 
-The general workflow of any experiment based on high-throughput DNA sequencing involves the following steps:
+The general workflow of any experiment based on high-throughput DNA sequencing involves the following steps, whose optimal execution requires molecular biology as well as computational expertise.
 
 1. **Sample prepration** This step is usually done by the molecular biologist.
 What type of starting material is needed depends on the type of assay. For RNA-seq, this would include RNA extraction from all samples of interest; for eRRBS, WGBS, exome-sequencing etc. DNA will have to be extracted; for ChIP-seq, chromatin will be purified, immunoprecipitated and eventually fragmented into small DNA pieces; and so on.
