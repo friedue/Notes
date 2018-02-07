@@ -21,7 +21,7 @@ global scaling methods will fail if there's a large number of DE genes &rarr; pe
 ---------
 
 [Abrams 2018]: https://doi.org/10.1101/247114 "A computational method to aid the design and analysis of single cell RNA-seq experiments for cell type identification"
-[scone]: 
+[scone]: http://www.bioconductor.org/packages/release/bioc/vignettes/scone/inst/doc/sconeTutorial.html "Scone Vignette"
 [Valentin Nov2017]: http://www.nxn.se/valent/2017/11/16/droplet-scrna-seq-is-not-zero-inflated 
 [Valentin Jan2018]: http://www.nxn.se/valent/2018/1/30/count-depth-variation-makes-poisson-scrna-seq-data-negative-binomial
 [Wagner 2018]: https://www.biorxiv.org/content/early/2018/01/24/217737
