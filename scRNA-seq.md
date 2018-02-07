@@ -18,10 +18,18 @@ The `scone` package contains lists of genes that are believed to be ubiquitously
 
 global scaling methods will fail if there's a large number of DE genes &rarr; per-clustering using rank-based methods followed by normalization within each group is preferable for those cases (see `scran` implementation)
 
+## DE
+
+[Soneson & Robinson][Soneson 2017]:
+
+* Pre-filtering of lowly expressed genes can have important effects on the results, particularly for some of the methods originally developed for analysis of bulk RNA-seq data
+* Generally, methods developed for bulk RNA-seq analysis do not perform notably worse than those developed specifically for scRNA-seq.
+
 ---------
 
 [Abrams 2018]: https://doi.org/10.1101/247114 "A computational method to aid the design and analysis of single cell RNA-seq experiments for cell type identification"
 [scone]: http://www.bioconductor.org/packages/release/bioc/vignettes/scone/inst/doc/sconeTutorial.html "Scone Vignette"
+[Soneson 2017]: https://doi.org/10.1101/143289 "Bias, Robustness And Scalability In Differential Expression Analysis Of Single-Cell RNA-Seq Data"
 [Valentin Nov2017]: http://www.nxn.se/valent/2017/11/16/droplet-scrna-seq-is-not-zero-inflated 
 [Valentin Jan2018]: http://www.nxn.se/valent/2018/1/30/count-depth-variation-makes-poisson-scrna-seq-data-negative-binomial
 [Wagner 2018]: https://www.biorxiv.org/content/early/2018/01/24/217737
