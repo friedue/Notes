@@ -41,6 +41,10 @@ global scaling methods will fail if there's a large number of DE genes &rarr; pe
 
 marker genes expressed >= 4x than the rest of the genes, either Seurat or Simlr algorithm will work [(Abrams 2018)][Abrams 2018]
 
+### t-SNE
+
+great write up: ["t-sne explained in plain javascript"](https://beta.observablehq.com/@nstrayer/t-sne-explained-in-plain-javascript)
+
 ## DE
 
 [Soneson & Robinson][Soneson 2017]:
