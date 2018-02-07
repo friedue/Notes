@@ -1,4 +1,19 @@
-marker genes expressed >= 4x than the rest of the genes, either Seurat or Simlr algorithm will work [(Abrams 2018)][Abrams 2018]
+## QC
+
+[`scone`'s][scone] approach to identifying transcripts that are worth keeping:
+
+```
+# Initial Gene Filtering: 
+# Select "common" transcripts based on proportional criteria.
+num_reads = quantile(assay(fluidigm)[assay(fluidigm) > 0])[4]
+num_cells = 0.25*ncol(fluidigm)
+is_common = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
+
+# Final Gene Filtering: Highly expressed in at least 5 cells
+num_reads = quantile(assay(fluidigm)[assay(fluidigm) > 0])[4]
+num_cells = 5
+is_quality = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
+```
 
 ## Dropouts
 
@@ -12,11 +27,19 @@ Current hypothesis:
 * SCDE (Kharchenko et al, 2015) assumes all zeroes are technical zeroes
 * MAST (Finak et al., 2015) categorizes all zero counts as 'unexpressed'
 
-The `scone` package contains lists of genes that are believed to be ubiquitously and even uniformly expressed across human tissues. If we assume these genes are truly expressed in all cells, we can label all zero abundance observations as drop-out events. [scone vignette][scone]
+The `scone` package contains lists of genes that are believed to be ubiquitously and even uniformly expressed across human tissues. If we assume these genes are truly expressed in all cells, we can label all zero abundance observations as drop-out events. [(scone vignette)][scone]
+
+```
+data(housekeeping, package = "scone")
+```
 
 ## Normalization
 
 global scaling methods will fail if there's a large number of DE genes &rarr; per-clustering using rank-based methods followed by normalization within each group is preferable for those cases (see `scran` implementation)
+
+## Clustering
+
+marker genes expressed >= 4x than the rest of the genes, either Seurat or Simlr algorithm will work [(Abrams 2018)][Abrams 2018]
 
 ## DE
 
