@@ -147,6 +147,8 @@ The [course notes](http://chagall.med.cornell.edu/RNASEQcourse/Intro2RNAseq.pdf)
 
 An introduction into general ChIP-seq analysis can be found [here](http://deeptools.readthedocs.io/en/latest/content/example_usage.html), including a [Glossary of HTS terms](http://deeptools.readthedocs.io/en/latest/content/help_glossary.html) including the different [file formats](http://deeptools.readthedocs.io/en/latest/content/help_glossary.html#file-formats).
 
+Benjamin Yakir's [Introduction to Statistics](http://pluto.huji.ac.il/~msby/StatThink/IntroStat.pdf) using lots of R and little calculus
+
 #### Online courses
 
 * Applied Bioinformatics Core's Datacamp Course [Introduction to R](https://www.datacamp.com/courses/abc-intro-2-r)
