@@ -60,7 +60,7 @@ global scaling methods will fail if there's a large number of DE genes &rarr; pe
 
 * there is no guarantee that a smoothened expression profile accurately reflects an existing cell population
 * might be a good idea to use scater's approach of first clustering and then smoothening within every cluster of similar cells (MAGIC tries that inherently)
-* after smoothening, values of different genes are no longer independent, which violates basic assumption of most DE tests
+* after smoothening, values of different genes might no longer independent, which violates basic assumption of most DE tests (Wagner's method generates a dependency of the cells, rather than genes)
 
 <a name="dims"></a>
 ## Dimensionality reduction and clustering
