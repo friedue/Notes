@@ -3,7 +3,7 @@
 * [Normalization](#norm)
 * [Smoothening & Imputation](#smooth)
 * [Dimensionality reduction & clustering](#dims)
-* [DE]
+* [DE](#de)
 
 
 -------------------------------
@@ -53,6 +53,15 @@ global scaling methods will fail if there's a large number of DE genes &rarr; pe
 <a name="smooth"></a>
 ## Smoothening
 
+| Publication                        | Method          | Package |
+|------------------------------------|-----------------|---------|
+| [Wagner, Yatai, 2018][Wagner 2018] | knn-smoothing   | [github.com/yanailab/knn-smoothing](http://github.com/yanailab/knn-smoothing) |
+| [Dijk et al., 2017][Dijk 2017]     | manifold learning using diffusion maps | [github](https://github.com/KrishnaswamyLab/magic) |
+
+* there is no guarantee that a smoothened expression profile accurately reflects an existing cell population
+* might be a good idea to use scater's approach of first clustering and then smoothening within every cluster of similar cells (MAGIC tries that inherently)
+* after smoothening, values of different genes are no longer independent, which violates basic assumption of most DE tests
+
 <a name="dims"></a>
 ## Dimensionality reduction and clustering
 
@@ -77,6 +86,7 @@ Avril Coghlan's write-up of [PCA](http://little-book-of-r-for-multivariate-analy
 ---------
 
 [Abrams 2018]: https://doi.org/10.1101/247114 "A computational method to aid the design and analysis of single cell RNA-seq experiments for cell type identification"
+[Dijk 2017]: https://www.biorxiv.org/content/early/2017/02/25/111591
 [scone]: http://www.bioconductor.org/packages/release/bioc/vignettes/scone/inst/doc/sconeTutorial.html "Scone Vignette"
 [Soneson 2017]: https://doi.org/10.1101/143289 "Bias, Robustness And Scalability In Differential Expression Analysis Of Single-Cell RNA-Seq Data"
 [Valentin Nov2017]: http://www.nxn.se/valent/2017/11/16/droplet-scrna-seq-is-not-zero-inflated 
