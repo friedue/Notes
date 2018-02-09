@@ -1,3 +1,14 @@
+* [QC](#qc)
+* [Dropouts](#dropouts)
+* [Normalization](#norm)
+* [Smoothening & Imputation](#smooth)
+* [Dimensionality reduction & clustering](#dims)
+* [DE]
+
+
+-------------------------------
+
+<a name="qc"></a>
 ## QC
 
 [`scone`'s][scone] approach to identifying transcripts that are worth keeping:
@@ -15,6 +26,7 @@ num_cells = 5
 is_quality = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
 ```
 
+<a name="dropouts"></a>
 ## Dropouts
 
 Current hypothesis:
@@ -33,11 +45,16 @@ The `scone` package contains lists of genes that are believed to be ubiquitously
 data(housekeeping, package = "scone")
 ```
 
+<a name="norm"></a>
 ## Normalization
 
 global scaling methods will fail if there's a large number of DE genes &rarr; per-clustering using rank-based methods followed by normalization within each group is preferable for those cases (see `scran` implementation)
 
-## Clustering
+<a name="smooth"></a>
+## Smoothening
+
+<a name="dims"></a>
+## Dimensionality reduction and clustering
 
 marker genes expressed >= 4x than the rest of the genes, either Seurat or Simlr algorithm will work [(Abrams 2018)][Abrams 2018]
 
@@ -45,6 +62,11 @@ marker genes expressed >= 4x than the rest of the genes, either Seurat or Simlr 
 
 great write up: ["t-sne explained in plain javascript"](https://beta.observablehq.com/@nstrayer/t-sne-explained-in-plain-javascript)
 
+### PCA
+
+Avril Coghlan's write-up of [PCA](http://little-book-of-r-for-multivariate-analysis.readthedocs.io/en/latest/src/multivariateanalysis.html#principal-component-analysis)
+
+<a name="de"></a>
 ## DE
 
 [Soneson & Robinson][Soneson 2017]:
