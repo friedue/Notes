@@ -1,8 +1,0 @@
-
-## Shiny modules
-
-* piece of a Shiny app
-* can’t be directly run
-* included as part of a larger app (or as part of a larger Shiny module–they are composable).
-
-Modules can represent input, output, or both.
