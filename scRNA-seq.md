@@ -1,4 +1,3 @@
-* [QC](#qc)
 * [Dropouts](#dropouts)
 * [Normalization](#norm)
 * [Smoothening & Imputation](#smooth)
@@ -7,24 +6,6 @@
 
 
 -------------------------------
-
-<a name="qc"></a>
-## QC
-
-[`scone`'s][scone] approach to identifying transcripts that are worth keeping:
-
-```
-# Initial Gene Filtering: 
-# Select "common" transcripts based on proportional criteria.
-num_reads = quantile(assay(fluidigm)[assay(fluidigm) > 0])[4]
-num_cells = 0.25*ncol(fluidigm)
-is_common = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
-
-# Final Gene Filtering: Highly expressed in at least 5 cells
-num_reads = quantile(assay(fluidigm)[assay(fluidigm) > 0])[4]
-num_cells = 5
-is_quality = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
-```
 
 <a name="dropouts"></a>
 ## Dropouts
@@ -43,6 +24,46 @@ The `scone` package contains lists of genes that are believed to be ubiquitously
 
 ```
 data(housekeeping, package = "scone")
+```
+
+### scone's approach
+
+[`scone`'s][scone] approach to identifying transcripts that are worth keeping:
+
+```
+# Initial Gene Filtering: 
+# Select "common" transcripts based on proportional criteria.
+num_reads = quantile(assay(fluidigm)[assay(fluidigm) > 0])[4]
+num_cells = 0.25*ncol(fluidigm)
+is_common = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
+
+# Final Gene Filtering: Highly expressed in at least 5 cells
+num_reads = quantile(assay(fluidigm)[assay(fluidigm) > 0])[4]
+num_cells = 5
+is_quality = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
+```
+
+### My own approach using dropout rates
+
+```
+## calculate drop out rates
+gns_dropouts <- calc_dropouts_per_cellGroup(sce, genes = rownames(sce), split_by = "condition")
+
+## define HK genes for display
+hk_genes <- unique(c(grep("^mt-", rownames(sce), value=TRUE, ignore.case=TRUE), # mitochondrial genes
+            grep("^Rp[sl]", rownames(sce), value=TRUE, ignore.case=TRUE))) # ribosomal genes
+
+## plot
+ggplot(data = gns_dropouts,
+        aes(x = log10(mean.pct.of.counts),
+            y = log10(pct.zeroCov_cells + .1),
+        text = paste(gene, condition, sep = "_"))) + 
+  geom_point(aes(color = condition), shape = 1, size = .5, alpha = .5) +
+  ## add HK gene data points
+  geom_point(data = gns_dropouts[gene %in% hk_genes],
+             aes(fill = condition), shape = 22, size = 4, alpha = .8) +
+   facet_grid(~condition) + 
+   ggtitle("With housekeeping genes")
 ```
 
 <a name="norm"></a>
