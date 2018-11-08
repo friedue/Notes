@@ -71,6 +71,14 @@ ggplot(data = gns_dropouts,
 
 global scaling methods will fail if there's a large number of DE genes &rarr; per-clustering using rank-based methods followed by normalization within each group is preferable for those cases (see `scran` implementation)
 
+```
+qckclust <- scran::quickCluster(sce, method = "igraph",
+min.mean = 0.1, irlba.args = list(maxit=1000))
+sce <- computeSumFactors(sce, min.mean = 0.1, cluster=qckclust)
+
+sce <- normalize(sce, log_exprs_offset = log_offset)
+```
+
 <a name="smooth"></a>
 ## Smoothening
 
