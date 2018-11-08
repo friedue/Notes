@@ -88,6 +88,25 @@ global scaling methods will fail if there's a large number of DE genes &rarr; pe
 
 marker genes expressed >= 4x than the rest of the genes, either Seurat or Simlr algorithm will work [(Abrams 2018)][Abrams 2018]
 
+```
+run_clustering <- function(sce.object, dimred_name, neighbors, exprs_values){
+  
+  print("Building SNNGraph")
+  snn.gr <- scran::buildSNNGraph(sce.object,
+                                 use.dimred = dimred_name,
+                                 assay.type = exprs_values,
+                                 k = neighbors)
+  print("Clustering")
+  clusters <- igraph::cluster_walktrap(snn.gr)
+  return(factor(clusters$membership))
+}
+
+sce.filt$Cluster.condRegress_k100 <- run_clustering(sce.filt,
+                                                   dimred_name = "PCA_cond_regressed_Poisson",
+                                                   neighbors = 100,
+                                                   exprs_values = "cond_regressed")
+```
+
 ### t-SNE
 
 great write up: ["t-sne explained in plain javascript"](https://beta.observablehq.com/@nstrayer/t-sne-explained-in-plain-javascript)
