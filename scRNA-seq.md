@@ -1,4 +1,3 @@
-* [QC](#qc)
 * [Dropouts](#dropouts)
 * [Normalization](#norm)
 * [Smoothening & Imputation](#smooth)
@@ -7,24 +6,6 @@
 
 
 -------------------------------
-
-<a name="qc"></a>
-## QC
-
-[`scone`'s][scone] approach to identifying transcripts that are worth keeping:
-
-```
-# Initial Gene Filtering: 
-# Select "common" transcripts based on proportional criteria.
-num_reads = quantile(assay(fluidigm)[assay(fluidigm) > 0])[4]
-num_cells = 0.25*ncol(fluidigm)
-is_common = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
-
-# Final Gene Filtering: Highly expressed in at least 5 cells
-num_reads = quantile(assay(fluidigm)[assay(fluidigm) > 0])[4]
-num_cells = 5
-is_quality = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
-```
 
 <a name="dropouts"></a>
 ## Dropouts
@@ -45,10 +26,58 @@ The `scone` package contains lists of genes that are believed to be ubiquitously
 data(housekeeping, package = "scone")
 ```
 
+### scone's approach
+
+[`scone`'s][scone] approach to identifying transcripts that are worth keeping:
+
+```
+# Initial Gene Filtering: 
+# Select "common" transcripts based on proportional criteria.
+num_reads = quantile(assay(fluidigm)[assay(fluidigm) > 0])[4]
+num_cells = 0.25*ncol(fluidigm)
+is_common = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
+
+# Final Gene Filtering: Highly expressed in at least 5 cells
+num_reads = quantile(assay(fluidigm)[assay(fluidigm) > 0])[4]
+num_cells = 5
+is_quality = rowSums(assay(fluidigm) >= num_reads ) >= num_cells
+```
+
+### My own approach using dropout rates
+
+```
+## calculate drop out rates
+gns_dropouts <- calc_dropouts_per_cellGroup(sce, genes = rownames(sce), split_by = "condition")
+
+## define HK genes for display
+hk_genes <- unique(c(grep("^mt-", rownames(sce), value=TRUE, ignore.case=TRUE), # mitochondrial genes
+            grep("^Rp[sl]", rownames(sce), value=TRUE, ignore.case=TRUE))) # ribosomal genes
+
+## plot
+ggplot(data = gns_dropouts,
+        aes(x = log10(mean.pct.of.counts),
+            y = log10(pct.zeroCov_cells + .1),
+        text = paste(gene, condition, sep = "_"))) + 
+  geom_point(aes(color = condition), shape = 1, size = .5, alpha = .5) +
+  ## add HK gene data points
+  geom_point(data = gns_dropouts[gene %in% hk_genes],
+             aes(fill = condition), shape = 22, size = 4, alpha = .8) +
+   facet_grid(~condition) + 
+   ggtitle("With housekeeping genes")
+```
+
 <a name="norm"></a>
 ## Normalization
 
 global scaling methods will fail if there's a large number of DE genes &rarr; per-clustering using rank-based methods followed by normalization within each group is preferable for those cases (see `scran` implementation)
+
+```
+qckclust <- scran::quickCluster(sce, method = "igraph",
+min.mean = 0.1, irlba.args = list(maxit=1000))
+sce <- computeSumFactors(sce, min.mean = 0.1, cluster=qckclust)
+
+sce <- normalize(sce, log_exprs_offset = log_offset)
+```
 
 <a name="smooth"></a>
 ## Smoothening
@@ -66,6 +95,25 @@ global scaling methods will fail if there's a large number of DE genes &rarr; pe
 ## Dimensionality reduction and clustering
 
 marker genes expressed >= 4x than the rest of the genes, either Seurat or Simlr algorithm will work [(Abrams 2018)][Abrams 2018]
+
+```
+run_clustering <- function(sce.object, dimred_name, neighbors, exprs_values){
+  
+  print("Building SNNGraph")
+  snn.gr <- scran::buildSNNGraph(sce.object,
+                                 use.dimred = dimred_name,
+                                 assay.type = exprs_values,
+                                 k = neighbors)
+  print("Clustering")
+  clusters <- igraph::cluster_walktrap(snn.gr)
+  return(factor(clusters$membership))
+}
+
+sce.filt$Cluster.condRegress_k100 <- run_clustering(sce.filt,
+                                                   dimred_name = "PCA_cond_regressed_Poisson",
+                                                   neighbors = 100,
+                                                   exprs_values = "cond_regressed")
+```
 
 ### t-SNE
 
