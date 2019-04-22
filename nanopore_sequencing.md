@@ -13,6 +13,7 @@ Details of the methods were taken from [Deamer et al., 2016](https://www.nature.
 * the **nanopore** = biosensor _and_ only passageway for exchange between the ionic solution on two sides of a membrane
   - ionic conductivity through the narrowest region of the nanopore is particularly sensitive to the presence of a nucleobase's mass and its associated electrical field
   - different bases will invoke different changes in the ionic current levels that pass through the pore
+* there's usuallly **5 bases** present within the narrowest spot of the nanopore!
 * the DNA molecule is prepared for sequencing
     - fragmentation (mostly to achieve uniformity in the fragment size distributions)
     - **adapters** at both ends
@@ -30,6 +31,16 @@ Details of the methods were taken from [Deamer et al., 2016](https://www.nature.
       
 
 ![](images/nanopore_processing02.png)
+
+### Base calling
+
+* Nanopore raw data: "squiggles"
+    - i.e. electrical current over time
+* Base calling = translate the raw electrical signal to the nucleotide sequence
+* quite noisy because it's **single molecule data**
+* base calleres mostly based on neuronal networks (originally: HMM)
+
+ONT has developed four base callers to date (March 2019): ALbacore, Guppy, Scrappie, Flappie
 
 
 ## IT infrastructure
@@ -56,4 +67,17 @@ Guppy is a production basecaller provided by Oxford Nanopore, and uses a command
 
 [source](https://community.nanoporetech.com/requirements_documents/minion-it-reqs.pdf)
 
+It was preceded by `Albacore`.
 
+>Albacore is a general-purpose basecaller that runs on CPUs. Guppy is similar to Albacore but can use GPUs for improved base-
+calling speed. While the two basecallers have coexisted for about a year, ONT has discontinued
+development on Albacore in favour of the more performant Guppy. [ref](https://www.biorxiv.org/content/early/2019/02/07/543439.full.pdf)
+
+## Tutorials & software resources
+
+* [ONT Tutorial Basic QC](https://github.com/nanoporetech/ont_tutorial_basicqc)
+* [MinIONQC](https://github.com/roblanf/minion_qc): diagnostic plots and data for quality control of sequencing data from Oxford Nanopore's MinION and PromethION sequencer
+* [pycoQC-2](https://github.com/a-slide/pycoQC): computes metrics and generates interactive QC plots for Oxford Nanopore technologies sequencing data
+* [poretools Jupyter Notebook](https://nbviewer.jupyter.org/github/arq5x/poretools/blob/master/poretools/ipynb/test_run_report.ipynb), [poretools docs](https://poretools.readthedocs.io/en/latest/)
+* [minimap2](https://github.com/lh3/minimap2#install)
+* [de.NBI Nanopore Training Course](https://denbi-nanopore-training-course.readthedocs.io/en/latest/index.html)
