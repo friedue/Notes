@@ -3,6 +3,7 @@
 * [Classical GSEA - background](#classGSEA)
 	*	[R implementations](#rgseas) 
 		* [Fast GSEA](#fgsea)
+		* [enrichPW](#enrichpw)
 		* [time-course GSA](#tcgsa)
 * [single sample GSEA](#ssgsesa)
 	* [Differences to GSEA](#ssGSEAvsGSEA) 
@@ -106,8 +107,43 @@ P <- plotEnrichment(pathway = orginal_pws[[tPW]], ranks)
 P + ggtitle("Most strongly enriched pathway")
 ```
 
+<a name="enrichpw"></a>
+#### 2. enrichPW (ReactomePA package)
+
+This is useful because it can directly be used with `clusterProfiler::compareClusters`
+
+Based on [Yu et al, 2016](https://dx.doi.org/10.1039/C5MB00663E).
+
+* the input gene ID should be Entrez gene ID (see `clusterProfiler::bitr` for a conversion function)
+* This approach will find genes where the difference is large, but it will not detect a situation where the difference is small, but evidenced in coordinated way in a set of related genes. Gene Set Enrichment Analysis (GSEA)(Subramanian et al. 2005) directly addressed this limitation. All genes can be used in GSEA; GSEA aggregates the per gene statistics across genes within a gene set, therefore making it possible to detect situations where all genes in a predefined set change in a small but coordinated way
+* uses the fGSEA implementation described above [reference](http://bioconductor.org/packages/release/bioc/vignettes/DOSE/inst/doc/GSEA.html)
+
+Instructions for preparing the geneList were taken from [here](https://github.com/GuangchuangYu/DOSE/wiki/how-to-prepare-your-own-geneList) -- basically, one needs a named and sorted vector of a rank statistic, the same as for fgsea [(see above)](#fgsea).
+
+```
+## prepare geneList
+d = read.csv(your_csv_file)
+## assume 1st column is ID
+## 2nd column is FC
+
+## feature 1: numeric vector
+geneList = d[,2]
+## feature 2: named vector
+names(geneList) = as.character(d[,1])
+## feature 3: decreasing order
+geneList = sort(geneList, decreasing = TRUE)
+
+```
+
+```
+y <- gsePathway(geneList, nPerm=10000,
+                pvalueCutoff=0.2,
+                pAdjustMethod="BH", verbose=FALSE)
+res <- as.data.frame(y)
+```
+
 <a name="tcgsa"></a>
-#### 2. TcGSA: time-course GSA
+#### 3. TcGSA: time-course GSA
 
 [Time-course Gene Set Enrichment Analysis](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310) and its [vignette](https://cran.r-project.org/web/packages/TcGSA/vignettes/TcGSA_userguide.html)
 
