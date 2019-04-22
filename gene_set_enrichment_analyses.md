@@ -21,13 +21,28 @@
 
 ![GSEA](https://raw.githubusercontent.com/friedue/Notes/master/images/GSEA.png)
 
+### Downloading `gmt` files
+
+The MSigDB sets can be downloaded from the Broad: [http://software.broadinstitute.org/gsea/msigdb/collections.jsp](http://software.broadinstitute.org/gsea/msigdb/collections.jsp).
+
+Some examples:
+
+| MsigDB Name | Meaning |
+|-------------|----------|
+| `C2*gmt`    | curated gene sets |
+| `H*gmt`     | Hallmark gene set |
+| `C3*gmt`    | Motif gene sets |
+| `C3.tft.*gmt`|TF targets|
+|`C4.cm.*gmt`  | Cancer moduls (individual modules have non-descript names!) |
+| `C6.all.*gmt` | oncogenic signatures |
+| `C7.all*gmt`  | immunologic signatures |
+
 <a name="rgseas"></a>
 ### R implementations
 
 GSEA is usually run via the Broad Institute's JAVA implementation.
 R has numerous solutions, too. 
-They usually rely on the user to download the gene sets/pathways.
-The MSigDB sets can be downloaded from the Broad: [http://software.broadinstitute.org/gsea/msigdb/collections.jsp](http://software.broadinstitute.org/gsea/msigdb/collections.jsp)
+They usually rely on the user to download the gene sets/pathways (see above for donwloading `gmt` files).
 
 Info about how to generate self-built `gmt` files are [here](https://cran.r-project.org/web/packages/TcGSA/vignettes/TcGSA_userguide.html#self-built-gmt).
 
