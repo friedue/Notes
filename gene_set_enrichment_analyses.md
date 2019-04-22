@@ -110,7 +110,7 @@ P + ggtitle("Most strongly enriched pathway")
 <a name="enrichpw"></a>
 #### 2. enrichPW (ReactomePA package)
 
-This is useful because it can directly be used with `clusterProfiler::compareClusters`
+This is useful because its output can directly be used with `clusterProfiler::compareClusters`
 
 Based on [Yu et al, 2016](https://dx.doi.org/10.1039/C5MB00663E).
 
@@ -119,6 +119,19 @@ Based on [Yu et al, 2016](https://dx.doi.org/10.1039/C5MB00663E).
 * uses the fGSEA implementation described above [reference](http://bioconductor.org/packages/release/bioc/vignettes/DOSE/inst/doc/GSEA.html)
 
 Instructions for preparing the geneList were taken from [here](https://github.com/GuangchuangYu/DOSE/wiki/how-to-prepare-your-own-geneList) -- basically, one needs a named and sorted vector of a rank statistic, the same as for fgsea [(see above)](#fgsea).
+
+```
+## get ENTREZ IDs (can also be done with clusterProfiler::bitr)
+library(AnnotationDbi)
+library(org.Hs.eg.db)
+columns(org.Hs.eg.db)
+#[1] "ACCNUM"       "ALIAS"        "ENSEMBL"      "ENSEMBLPROT"  "ENSEMBLTRANS" "ENTREZID"     "ENZYME"       "EVIDENCE"     "EVIDENCEALL"  "GENENAME"    #[11] "GO"           "GOALL"        "IPI"          "MAP"          "OMIM"         "ONTOLOGY"     "ONTOLOGYALL"  "PATH"         "PFAM"         "PMID"        #[21] "PROSITE"      "REFSEQ"       "SYMBOL"       "UCSCKG"       "UNIGENE"      "UNIPROT"
+
+anno_entrez <- select(org.Hs.eg.db,
+                      keys = unique(dp_all_DN$Uniprot),
+                      columns = c("ENTREZID", "SYMBOL"),
+                      keytype = "UNIPROT") 
+```
 
 ```
 ## prepare geneList
@@ -133,6 +146,9 @@ names(geneList) = as.character(d[,1])
 ## feature 3: decreasing order
 geneList = sort(geneList, decreasing = TRUE)
 
+
+## The tibble::deframe function is very useful for this, too:
+ranks_DN <- tibble::deframe( x = data.frame( dp_all_DN[!is.na(ENTREZID), mean(t), by = "ENTREZID"])) 
 ```
 
 ```
