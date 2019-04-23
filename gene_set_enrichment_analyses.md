@@ -3,6 +3,7 @@
 * [Classical GSEA - background](#classGSEA)
 	*	[R implementations](#rgseas) 
 		* [Fast GSEA](#fgsea)
+		* [clusterProfiler::GSEA](#clusterProfilerGSEA)
 		* [enrichPW](#enrichpw)
 		* [time-course GSA](#tcgsa)
 * [single sample GSEA](#ssgsesa)
@@ -107,10 +108,49 @@ P <- plotEnrichment(pathway = orginal_pws[[tPW]], ranks)
 P + ggtitle("Most strongly enriched pathway")
 ```
 
+<a name="clusterProfilerGSEA"></a>
+#### 2. clusterProfiler::GSEA
+
+```
+library(clusterProfiler)
+# parse the gmt file into a TERM2GENE data.frame 
+c5 <- read.gmt(gmtfile)
+
+data(geneList, package="DOSE") # named and sorted vector where the names are ENTREZ IDs and the values are some rank statistic
+egmt_gsea <- GSEA(geneList, TERM2GENE=c5, verbose=FALSE)
+
+## hypergeometric enrichment analysis is also possible
+gene <- names(geneList)[abs(geneList) > 2]
+egmt_enricher <- enricher(gene, TERM2GENE=c5)
+```
+
+The results can be used with:
+
+* `barplot` or `dotplot` [Reference](http://guangchuangyu.github.io/2015/06/dotplot-for-enrichment-result/), [clusterProfiler book](https://yulab-smu.github.io/clusterProfiler-book/)
+    - x-axis can be gene count or gene ratio
+    - count = core genes
+    - gene ratio = Count/setSize
+* `emapplot` [Reference 1](https://www.r-bloggers.com/enrichment-map/)
+    - network-based visualization method for gene-set enrichment results
+    - nodes = gene sets, edges = gene overlap between gene sets
+    - This technique finds functionally coherent gene-sets, such as pathways, that are statistically over-represented in a given gene list. [Reference 2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2981572/)
+    - Automated network layout groups related gene-sets into network clusters; mutually overlapping gene sets are tend to cluster together,
+    - `clusterProfiler` provides the R implementation of the [original cytoscape enrichment map](http://baderlab.org/Software/EnrichmentMap/)
+* `cnetplot`
+    - depicts the linkages of genes and biological concepts (e.g. GO terms or KEGG pathways) as a network [Ref 3](https://yulab-smu.github.io/clusterProfiler-book/chapter12.html#gene-concept-network)
+    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-45-1.png)
+* `heatplot`
+    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-46-2.png)
+* `gseaplot(egmt_gsea, geneSetId = "X")` and `gseaplot2(edo2, geneSetID = 1:3, pvalue_table = TRUE, color = c("#E495A5", "#86B875", "#7DB0DD"), ES_geom = "dot")`
+    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-54-1.png)
+* `gsearank`
+    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-57-1.png)
+
 <a name="enrichpw"></a>
 #### 2. enrichPW (ReactomePA package)
 
-This is useful because its output can directly be used with `clusterProfiler::compareClusters`
+This is useful because its output can directly be used with `clusterProfiler::compareClusters`.
+However, it only performs GSEA on the REACTOME pathways.
 
 Based on [Yu et al, 2016](https://dx.doi.org/10.1039/C5MB00663E).
 
@@ -125,7 +165,9 @@ Instructions for preparing the geneList were taken from [here](https://github.co
 library(AnnotationDbi)
 library(org.Hs.eg.db)
 columns(org.Hs.eg.db)
-#[1] "ACCNUM"       "ALIAS"        "ENSEMBL"      "ENSEMBLPROT"  "ENSEMBLTRANS" "ENTREZID"     "ENZYME"       "EVIDENCE"     "EVIDENCEALL"  "GENENAME"    #[11] "GO"           "GOALL"        "IPI"          "MAP"          "OMIM"         "ONTOLOGY"     "ONTOLOGYALL"  "PATH"         "PFAM"         "PMID"        #[21] "PROSITE"      "REFSEQ"       "SYMBOL"       "UCSCKG"       "UNIGENE"      "UNIPROT"
+#[1] "ACCNUM"       "ALIAS"        "ENSEMBL"      "ENSEMBLPROT"  "ENSEMBLTRANS" "ENTREZID"     "ENZYME"       "EVIDENCE"     "EVIDENCEALL"  "GENENAME"    
+#[11] "GO"           "GOALL"        "IPI"          "MAP"          "OMIM"         "ONTOLOGY"     "ONTOLOGYALL"  "PATH"         "PFAM"         "PMID"        
+#[21] "PROSITE"      "REFSEQ"       "SYMBOL"       "UCSCKG"       "UNIGENE"      "UNIPROT"
 
 anno_entrez <- select(org.Hs.eg.db,
                       keys = unique(dp_all_DN$Uniprot),
