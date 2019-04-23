@@ -224,6 +224,15 @@ res <- as.data.frame(y)
 <a name="tcgsa"></a>
 #### 3. TcGSA: time-course GSA
 
+From the [original paper](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310#pcbi-1004310-g005):
+
+1. **Determining signficantly changing gene sets**
+    >In TcGSA, a "significant" gene set is a gene set whose expression is not stable either over time (in one group experiments) or over groups (in several groups experiments), once between genes and patients variability is taken into account.
+    The null hypothesis is that inside the gene set S, the evolution of gene expressions over time is the same regardless of the group.
+    One model is fitted under the null hypothesis, and one is fitted under the alternative. The likelihood ratio is then computed.
+2. **Estimating individual gene profiles**
+   > The mixed model uses the repeated pattern of the longitudinal measurements to structure the variation. Its estimations give smoother trajectories for the genes than the raw data, which makes the general evolution of the set clearerhe estimations from the mixed model are shrunken towards the average expression inside the gene set.
+
 [Time-course Gene Set Enrichment Analysis](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310) and its [vignette](https://cran.r-project.org/web/packages/TcGSA/vignettes/TcGSA_userguide.html)
 
 3 inputs are required to run TcGSA:
