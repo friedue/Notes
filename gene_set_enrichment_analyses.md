@@ -127,20 +127,38 @@ egmt_enricher <- enricher(gene, TERM2GENE=c5)
 The results can be used with:
 
 * `barplot` or `dotplot` [Reference](http://guangchuangyu.github.io/2015/06/dotplot-for-enrichment-result/), [clusterProfiler book](https://yulab-smu.github.io/clusterProfiler-book/)
+    - shows the number of genes associated with the first 50 terms (size) and the p-adjusted values for these terms (color)
     - x-axis can be gene count or gene ratio
     - count = core genes
-    - gene ratio = Count/setSize
+    - gene ratio = Count/setSize (# genes related to GO term / total number of sig genes) [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html)
 * `emapplot` [Reference 1](https://www.r-bloggers.com/enrichment-map/)
+    - relationship between the top 50 most significantly enriched GO terms (padj.), by grouping similar terms together [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html)
+    - size of the terms represents the number of genes that are significant from our list [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html) 
     - network-based visualization method for gene-set enrichment results
     - nodes = gene sets, edges = gene overlap between gene sets
     - This technique finds functionally coherent gene-sets, such as pathways, that are statistically over-represented in a given gene list. [Reference 2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2981572/)
     - Automated network layout groups related gene-sets into network clusters; mutually overlapping gene sets are tend to cluster together,
     - `clusterProfiler` provides the R implementation of the [original cytoscape enrichment map](http://baderlab.org/Software/EnrichmentMap/)
-* `cnetplot`
+* `cnetplot` = category netplot
     - depicts the linkages of genes and biological concepts (e.g. GO terms or KEGG pathways) as a network [Ref 3](https://yulab-smu.github.io/clusterProfiler-book/chapter12.html#gene-concept-network)
+    - shows the relationships between the genes associated with the top five most significant GO terms and the fold changes of the significant genes associated with these terms (color) [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html) 
+    - size of the GO terms reflects the pvalues of the terms
     - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-45-1.png)
 * `heatplot`
     - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-46-2.png)
+    
+    ```
+    If you are interested in significant processes that are not among the top five, you can subset your ego dataset to only display these processes:
+    ## Subsetting the ego results without overwriting original `ego` variable
+    ego2 <- ego
+    ego2@result <- ego@result[c(1,3,4,8,9),]
+    
+    ## Plotting terms of interest
+    cnetplot(ego2, 
+             categorySize="pvalue", foldChange=OE_foldchanges, showCategory = 5, vertex.label.font=6)
+    ```
+    ![](https://hbctraining.github.io/DGE_workshop_salmon/img/cnetplot-2_salmon.png)
+    
 * `gseaplot(egmt_gsea, geneSetId = "X")` and `gseaplot2(edo2, geneSetID = 1:3, pvalue_table = TRUE, color = c("#E495A5", "#86B875", "#7DB0DD"), ES_geom = "dot")`
     - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-54-1.png)
 * `gsearank`
