@@ -232,6 +232,8 @@ From the [original paper](https://journals.plos.org/ploscompbiol/article?id=10.1
     One model is fitted under the null hypothesis, and one is fitted under the alternative. The likelihood ratio is then computed.
 2. **Estimating individual gene profiles**
    > The mixed model uses the repeated pattern of the longitudinal measurements to structure the variation. Its estimations give smoother trajectories for the genes than the raw data, which makes the general evolution of the set clearerhe estimations from the mixed model are shrunken towards the average expression inside the gene set.
+3. **Clustering trends within significantly changing gene sets**
+   > Once a gene set S has been identified as significant through the previous mixed likelihood ratio statistics, a summary of its dynamic over time is needed. However, due to the possible heterogeneity of S, giving a summary representation of S dynamic is not obvious. We propose to automatically identify the number of trends in a significant gene set from the fit of the model. Predicted gene expressions from the linear mixed model are clustered, and the optimal number of trends is selected with the gap statistic. (...) Therefore, gene sets are actually split when heterogeneous, before being summarized. The predicted gene expression from the linear mixed model is used for this (and not the observed expression) because smoothness of trajectories facilitates classification
 
 [Time-course Gene Set Enrichment Analysis](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310) and its [vignette](https://cran.r-project.org/web/packages/TcGSA/vignettes/TcGSA_userguide.html)
 
