@@ -116,6 +116,9 @@ library(clusterProfiler)
 # parse the gmt file into a TERM2GENE data.frame 
 c5 <- read.gmt(gmtfile)
 
+## alternatively, there's a function to retrieve specific sets directly:
+msigdbr(species = "Homo sapiens", category = "C3") %>%  dplyr::select(gs_name, entrez_gene)
+
 data(geneList, package="DOSE") # named and sorted vector where the names are ENTREZ IDs and the values are some rank statistic
 egmt_gsea <- GSEA(geneList, TERM2GENE=c5, verbose=FALSE)
 
