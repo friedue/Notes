@@ -232,6 +232,87 @@ res <- as.data.frame(y)
 * The **gene expression matrix**: The gene expression should already be normalized before using TcGSA. In the rownames, the name of each probe/gene must match with the name of probes/genes in the gmt object.
 * The **design data** matrix: i.e., sample info table with samples = rows
 
+```
+tcgsa_result <- TcGSA::TcGSA.LR(expr = norm.df, 
+                                   gmt = gmt_hallmark,
+                                   design = si.df[colnames(norm.df),], 
+                                   subject_name = "subject", 
+                                   time_name = "day", 
+                                   group_name = "group")
+summary(tcgsa_result)
+#		A TcGSA object
+#Form of the time trend:
+#	linear
+#Number of treatment groups:
+#	2
+#Number of gene sets tested for significant time trend:
+#	50
+#
+#Number of significant gene sets at a 5% threshold (BY procedure):
+#	35 out of 50 gene sets
+
+head(TcGSA::signifLRT.TcGSA(tcgsa_result)$mixedLRTadjRes)
+#                       GeneSet      AdjPval                                                                         desc
+#33 HALLMARK_ALLOGRAFT_REJECTION 1.515091e-02 http://www.broadinstitute.org/gsea/msigdb/cards/HALLMARK_ALLOGRAFT_REJECTION
+#10   HALLMARK_ANDROGEN_RESPONSE 4.151712e-18   http://www.broadinstitute.org/gsea/msigdb/cards/HALLMARK_ANDROGEN_RESPONSE
+#28        HALLMARK_ANGIOGENESIS 2.330152e-09        http://www.broadinstitute.org/gsea/msigdb/cards/HALLMARK_ANGIOGENESIS
+#14     HALLMARK_APICAL_JUNCTION 7.833198e-19     http://www.broadinstitute.org/gsea/msigdb/cards/HALLMARK_APICAL_JUNCTION
+#15      HALLMARK_APICAL_SURFACE 8.813033e-04      http://www.broadinstitute.org/gsea/msigdb/cards/HALLMARK_APICAL_SURFACE
+#7            HALLMARK_APOPTOSIS 1.888258e-21           http://www.broadinstitute.org/gsea/msigdb/cards/HALLMARK_APOPTOSIS
+```
+
+```
+#This function clusters the genes dynamics of one gene sets into different dominant trends.
+# Uses the Gap statistics to determine the optimal number of clusters
+tcgsa_clust <- TcGSA::clustTrend(tcgs = tcgsa_result, 
+                                 expr=tcgsa_result$Estimations,
+                                 baseline = 1, # first time point,
+                                 ref = "control",
+                                 group_of_interest="DN")
+names(tcgsa_clust)
+#[1] "NbClust"        "ClustMeds"      "GenesPartition" "MaxNbClust"    
+names(tcgsa_clust[["ClustMeds"]])
+# [1] "HALLMARK_ALLOGRAFT_REJECTION"               "HALLMARK_ANDROGEN_RESPONSE"                 "HALLMARK_ANGIOGENESIS"                     
+# [4] "HALLMARK_APICAL_JUNCTION"                   "HALLMARK_APICAL_SURFACE"                    "HALLMARK_APOPTOSIS"                        
+# [7] "HALLMARK_BILE_ACID_METABOLISM"              "HALLMARK_CHOLESTEROL_HOMEOSTASIS"           "HALLMARK_COAGULATION"                      
+#[10] "HALLMARK_COMPLEMENT"                        "HALLMARK_E2F_TARGETS"                       "HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION"
+#[13] "HALLMARK_ESTROGEN_RESPONSE_EARLY"           "HALLMARK_FATTY_ACID_METABOLISM"             "HALLMARK_GLYCOLYSIS"                       
+#[16] "HALLMARK_HEME_METABOLISM"                   "HALLMARK_HYPOXIA"                           "HALLMARK_IL2_STAT5_SIGNALING"              
+#[19] "HALLMARK_IL6_JAK_STAT3_SIGNALING"           "HALLMARK_INFLAMMATORY_RESPONSE"             "HALLMARK_INTERFERON_GAMMA_RESPONSE"        
+#[22] "HALLMARK_KRAS_SIGNALING_UP"                 "HALLMARK_MITOTIC_SPINDLE"                   "HALLMARK_MYC_TARGETS_V1"                   
+#[25] "HALLMARK_MYC_TARGETS_V2"                    "HALLMARK_MYOGENESIS"                        "HALLMARK_NOTCH_SIGNALING"                  
+#[28] "HALLMARK_OXIDATIVE_PHOSPHORYLATION"         "HALLMARK_PROTEIN_SECRETION"                 "HALLMARK_REACTIVE_OXIGEN_SPECIES_PATHWAY"  
+#[31] "HALLMARK_SPERMATOGENESIS"                   "HALLMARK_TGF_BETA_SIGNALING"                "HALLMARK_TNFA_SIGNALING_VIA_NFKB"          
+#[34] "HALLMARK_UV_RESPONSE_DN"                    "HALLMARK_XENOBIOTIC_METABOLISM"            
+
+## heatmap
+plot(x = tcgsa_result,
+     expr = tcgsa_result$Estimations, 
+     clust_trends = tcgsa_clust,
+     legend.breaks = seq(from = -2,to = 2, by = 0.01),
+     time_unit="D",
+     #main = "Median trends...", 
+     subtitle="Hallmark gene sets",
+     cex.label.row=1.5, cex.label.col=1, cex.main=0.7,
+     heatmap.width = 0.1, dendrogram.size = 0.1, margins = c(5,15), heatKey.size = 0.5,
+     descript = FALSE, # avoids printing of Description column to the row names
+     color.vec = c("#D73027", "#FC8D59","lightyellow", "#91BFDB", "#4575B4")
+)
+```
+
+From the [original publication](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004310#pcbi-1004310-g005):
+
+>The median estimated gene expression over the patients is used for each trend.
+Each trend has seen its values reduced (so that its variance is 1) in order to make the dynamics more comparable.
+Each row is a group of gene having the same trend inside a gene set, and each column is a time point.
+The color key represents the median of the standardized estimation of gene expression over the patients for a given trend in a significant gene set. 
+It becomes red as median expression is up-regulated or blue as it is down-regulated compared to the value in the placebo (saline) at the same time.
+
+>It can be of interest to rank the significant gene sets to identify the most acute signals. The likelihood ratio provides insight on the magnitude of the variation of each gene set. The percentile of their corresponding likelihood ratio gives an idea of the importance of the variation for a significant gene set. 
+
+> Globally, the intensity of the response was stronger with the pneumoccocal vaccine than with the flu vaccine (Fig 5). The early response induced by the pneumococcal vaccine was dominated by inflammation whereas the top signal triggered by the flu vaccine involved an interferon signature (Fig 5B and 5D). In both vaccine, a T-cell response was also visible. In the pneumoccocal vaccine, a plasma cell signal, in association with cell cycle gene sets (Figs 5A and 5C), started at Day 7 until Day 14. This plasma blast signal was much less clear in the flu vaccine (Figs 5B and 5D).
+
+![Fig.5 from the TcGSA paper](https://journals.plos.org/ploscompbiol/article/figure/image?size=large&id=info:doi/10.1371/journal.pcbi.1004310.g005)
 
 <a name="ssGSEA"></a>
 ## ssGSEA
