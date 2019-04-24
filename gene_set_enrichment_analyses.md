@@ -272,6 +272,15 @@ head(TcGSA::signifLRT.TcGSA(tcgsa_result)$mixedLRTadjRes)
 #7            HALLMARK_APOPTOSIS 1.888258e-21           http://www.broadinstitute.org/gsea/msigdb/cards/HALLMARK_APOPTOSIS
 ```
 
+The likelihood ratio provides insight on the magnitude of the variation of each gene set.
+The `tcgsa_result` object contains the LR for every tested gene set:
+
+```
+> str(tcgsa_result$fit$LR)
+ num [1:50] 1.41e+02 1.91e+02 6.05e+01 1.88e+02 7.14e-03 ...
+```
+
+
 ```
 #This function clusters the genes dynamics of one gene sets into different dominant trends.
 # Uses the Gap statistics to determine the optimal number of clusters
