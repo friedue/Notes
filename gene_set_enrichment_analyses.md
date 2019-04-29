@@ -134,20 +134,20 @@ The results can be used with:
     - x-axis can be gene count or gene ratio
     - count = core genes
     - gene ratio = Count/setSize (# genes related to GO term / total number of sig genes) [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html)
-* `emapplot` [Reference 1](https://www.r-bloggers.com/enrichment-map/) = enrichment plot
-    - nodes = gene sets (top 50 most sign. enriched GO terms
+* `emapplot` = enrichment plot
+    - nodes = **gene sets** (top 50 most sign. enriched GO terms [Reference 1](https://www.r-bloggers.com/enrichment-map/) 
     - edges = **gene overlap between gene sets**
     - This technique finds functionally coherent gene-sets, such as pathways, that are statistically over-represented in a given gene list. [Reference 2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2981572/)
     - Automated network layout groups related gene-sets into network clusters; mutually overlapping gene sets tend to cluster together
     - `clusterProfiler` provides the R implementation of the [original cytoscape enrichment map](http://baderlab.org/Software/EnrichmentMap/)
-
     - similar terms are grouped together [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html)
     - size of the terms represents the number of genes that are significant from our list [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html) 
     - network-based visualization method for gene-set enrichment results
 * `cnetplot` = category netplot
-    - depicts the **linkages of genes and biological concepts**u (e.g. GO terms or KEGG pathways) as a network [Ref 3](https://yulab-smu.github.io/clusterProfiler-book/chapter12.html#gene-concept-network)
-    - shows the relationships between the **genes associated with the top five most significant GO terms**
-    - color = fold changes of the significant genes associated with these terms (color) [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html) 
+    - nodes = **genes** (of the top 5 most sign. GO terms)
+    - edges = indicate whether a gene belongs to a given gene set
+    - depicts the linkages of genes and biological concepts (e.g. GO terms or KEGG pathways) as a network [Ref 3](https://yulab-smu.github.io/clusterProfiler-book/chapter12.html#gene-concept-network)
+    - color = fold changes of the significant genes associated with these terms [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html) 
     - size of the GO terms = p-values of the terms
     - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-45-1.png)
 * `heatplot`
