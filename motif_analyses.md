@@ -9,8 +9,18 @@ MEME can discover more complex motifs than DREME but it requires far more proces
 and for that reason you may need to randomly subsample your dataset.
 The public web application for MEME is **limited to 60kb of input sequences**!
 
+#### DREME 
+
 DREME discovers lots of short motifs relatively quickly (compared to MEME) and can handle much larger datasets before the runtime becomes intractable.
 DREME is more suitable for short motifs, but is limited to motifs less that 8bp wide. 
+DREME discovers motifs by finding matches to regular expressions that are enriched in the positive sequence set over the negative sequence set. At one step in the algorithm, the number of sequences containing a match to a regular expression is compared between the two sets. However, each sequence is counted only once, whether it contains 1 match or 100 matches. Longer sequences are more likely to contain multiple matches, so if you submit a collection of long sequences to DREME it may miss some significant motifs. The multiple matches in a single sequence won't add to the evidence for the motif. You'll increase DREME's sensitivity if you break up your 1000bp sequences into 10 100bp sequences.
+ DREME depends on having two sets of sequences, one containing instances of the motifs and one not. If you don't provide a negative sequence set, DREME generates one by randomly shuffling the sequences you do provide. DREME then counts the number of exact matches in the two sequence sets to all words between length 4 and 8 in the two sets. At this stage wildcards are not part of the allowed alphabet. For each word DREME compares the number of exact matches in the positive and negative sets, and picks initial candidate motifs based on the p-value of the Fischer exact test for the counts in the two sets. The candidate motifs are then extended by adding wild cards to the allowed alphabet. If two motifs end up with the same significant final p-value they are both reported.
+Once you've identified the motif and have a PWM, you can then scan a sequence database using FIMO or CentriMO.
+ [Dreme Ref](https://groups.google.com/forum/#!searchin/meme-suite/DREME$20command$20line%7Csort:date/meme-suite/zOyDpLLtH_U/WLiOxdD0AwAJ)
+
+DREME works best with lots of short (ca. 100bp) sequences.
+If you have a couple of long sequences then it might be beneficial to split them into many smaller (ca. 100bp) sequences. With ChIP-seq data we recommend using 100bp regions around the peaks. [DREME tutorial](http://meme-suite.org/doc/dreme-tutorial.html?man_type=web)
+
 If you happen to have a control sequence set (aka negative sequences) containing motifs you don't want to discover then you can perform discriminative motif discovery with both MEME and DREME.
 The method for MEME is a little more involved (see [How do I perform discriminative motif discovery using the command line version of MEME?](https://groups.google.com/forum/#%21topic/meme-suite/wRcngYMKllE)).
 
