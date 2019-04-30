@@ -7,14 +7,30 @@
 If you have a set of sequences and you want to discover new motifs you need to use MEME, DREME or MEME-ChIP.
 MEME can discover more complex motifs than DREME but it requires far more processing resources (see [MEME: Dataset size and run time issues](https://groups.google.com/forum/#%21topic/meme-suite/QJiJsy1QxYk) )
 and for that reason you may need to randomly subsample your dataset.
+The public web application for MEME is **limited to 60kb of input sequences**!
 
 DREME discovers lots of short motifs relatively quickly (compared to MEME) and can handle much larger datasets before the runtime becomes intractable.
+DREME is more suitable for short motifs, but is limited to motifs less that 8bp wide. 
 If you happen to have a control sequence set (aka negative sequences) containing motifs you don't want to discover then you can perform discriminative motif discovery with both MEME and DREME.
 The method for MEME is a little more involved (see [How do I perform discriminative motif discovery using the command line version of MEME?](https://groups.google.com/forum/#%21topic/meme-suite/wRcngYMKllE)).
 
 MEME-ChIP is designed to make running MEME and DREME (as well as Tomtom and CentriMo) on ChIP-seq data easy.
 All you have to do is provide it with a set of sequences which are all the same length (between 300bp and 500bp) 
 which are centered on the ChIP-seq peaks and it will do the rest.
+
+[**GC bias for MEME or DREME**](https://groups.google.com/forum/#!searchin/meme-suite/DREME$20command$20line|sort:date/meme-suite/N7WBZASOBvE/COPsSlJsAAAJ):
+
+MEME adjusts for the biases in letters and groups of letters using the background model
+that you provide.  A 1-order model (made using fasta-get-markov) adjusts for dimer biases
+(like GC).
+
+DREME does not use a background model, and normalization depends on the control
+dataset it is provide with.
+
+MEME-ChIP uses fasta-shuffle-letters with -kmer 2, preserving
+dimer frequencies.  You could try manually creating a -kmer 3 (or higher) set of shuffled
+sequences, and rerunning DREME with them.  Refer to the "Program Information" section
+of your MEME-ChIP output to see how you would do this.
 
 
 **Tips for using MEME with ChIP-seq data**: [Ref](https://groups.google.com/forum/#%21topic/meme-suite/rIbjIHbcpAE)
