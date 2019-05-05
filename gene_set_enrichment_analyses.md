@@ -154,7 +154,9 @@ The results can be used with:
     - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-46-2.png)
     
     ```
-    If you are interested in significant processes that are not among the top five, you can subset your ego dataset to only display these processes:
+    If you are interested in significant processes that are not among the top five, 
+    you can subset your ego dataset to only display these processes:
+    
     ## Subsetting the ego results without overwriting original `ego` variable
     ego2 <- ego
     ego2@result <- ego@result[c(1,3,4,8,9),]
