@@ -4,3 +4,5 @@ Rob Patro:
 
 > Both of the approaches are algorithmic ways to return, in the case of pseudoalignment, sets of references [that are most compatible with the reads at hand],
 and in the case of selective alignment, scored mappings. They can both be run over "arbitrary" referenced indices.
+
+>If you don't (1) validate the "compatibility" you find and (2) seed in a sensitive fashion, then you end up with mappings whose accuracy is lesser than that derived from alignments. [see their pre-print on this](https://www.biorxiv.org/content/10.1101/657874v1)
