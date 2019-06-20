@@ -139,6 +139,7 @@ While the `geneList` is always the same object, the `clusterProfiler` universe n
 | C6 | oncogenic signatures |
 | C7 | immunologic signatures |
 
+See [Chapter 3](https://yulab-smu.github.io/clusterProfiler-book/chapter3.html#msigdb-analysis) for more details about the usage of the `msigdbr` package.
 
 ```
 library(clusterProfiler)
@@ -147,6 +148,7 @@ gmtfile <- system.file("extdata", "c5.cc.v5.0.entrez.gmt", package="clusterProfi
 c5 <- read.gmt(gmtfile)
 
 ## alternatively, there's a function to retrieve specific sets directly:
+library(msigdbr)
 msigdbr(species = "Homo sapiens", category = "C3") %>%  dplyr::select(gs_name, entrez_gene)
 
 ## get list of genes: named and sorted **vector** where the names are ENTREZ IDs and
