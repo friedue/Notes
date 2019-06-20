@@ -176,7 +176,7 @@ kk2 <- gseKEGG(geneList     = geneList,
 ##### For GO categories
 
 ```
-ego3 <- DOSE::gseGO(geneList     = geneList,
+ego3 <- clusterProfiler::gseGO(geneList     = geneList,
               OrgDb        = org.Hs.eg.db,
               ont          = "CC",
               nPerm        = 1000,
