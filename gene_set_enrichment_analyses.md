@@ -127,6 +127,19 @@ While the `geneList` is always the same object, the `clusterProfiler` universe n
 <a name="cp_gsea_msigdb"></a>
 ##### For MSigDB gmt files
 
+
+| Abbr. | Details | 
+|-------|---------|
+| H | hallmark gene sets |
+| C1| positional gene sets|
+| C2| curated gene sets|
+| C3 | motif gene sets |
+| C4 | computational gene sets |
+| C5 | GO gene sets |
+| C6 | oncogenic signatures |
+| C7 | immunologic signatures |
+
+
 ```
 library(clusterProfiler)
 ## parse the gmt file into a TERM2GENE data.frame 
