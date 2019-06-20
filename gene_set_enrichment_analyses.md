@@ -8,6 +8,7 @@
 			* [KEGG pathways](#cp_gsea_kegg)
 			* [GO term categories](#cp_gsea_go)
 			* [REACTOME pathways](#cp_gsea_reactome)
+			* [clusterProfiler plots that can be generated with the resulting object](#cp_gsea_results)
 		* [time-course GSA](#tcgsa)
 * [single sample GSEA](#ssgsesa)
 	* [Differences to GSEA](#ssGSEAvsGSEA) 
@@ -239,6 +240,7 @@ y <- gsePathway(geneList, nPerm=10000,
 res <- as.data.frame(y)
 ```
 
+<a name="cp_gsea_results"></a>
 ##### The results can be used with:
 
 * `barplot` or `dotplot` [Reference](http://guangchuangyu.github.io/2015/06/dotplot-for-enrichment-result/), [clusterProfiler book](https://yulab-smu.github.io/clusterProfiler-book/)
