@@ -240,6 +240,26 @@ y <- gsePathway(geneList, nPerm=10000,
 res <- as.data.frame(y)
 ```
 
+#### For CellMarkers
+
+>[By] manually curating over 100 000 published papers, 4124 entries including the cell marker information, tissue type, cell type, cancer information and source, were recorded. At last, **13 605 cell markers of 467 cell types in 158 human tissues/sub-tissues** and 9148 cell makers of 389 cell types in 81 mouse tissues/sub-tissues were collected and deposited in CellMarker. 
+[CellMarker Paper](https://doi.org/10.1093/nar/gky900)
+
+[CellMarker Website](http://biocc.hrbmu.edu.cn/CellMarker/download.jsp)
+
+Using CellMarkers with clusterProfiler:
+
+```
+cell_markers <- vroom::vroom('http://bio-bigdata.hrbmu.edu.cn/CellMarker/download/Human_cell_markers.txt') %>%
+   tidyr::unite("cellMarker", tissueType, cancerType, cellName, sep=", ") %>% 
+   dplyr::select(cellMarker, geneID) %>%
+   dplyr::mutate(geneID = strsplit(geneID, ', '))
+   
+y <- enricher(gene, TERM2GENE=cell_markers, minGSSize=1)
+```
+
+Code from [here](https://yulab-smu.github.io/clusterProfiler-book/chapter3.html#cell-marker)
+
 <a name="cp_gsea_results"></a>
 ##### The results can be used with:
 
