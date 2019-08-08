@@ -1,8 +1,8 @@
 For every data set:
 
-1. Save data and metadata in ExpHub
+1. **Save data and metadata in ExpHub**
   - relevant scripts/Rmds in `inst/scripts/`
-    - `make-data.Rmd` -- describe how the data stored in ExpHub was obtained and saved
+    - `make-data.Rmd` -- describe how the data stored in ExpHub was obtained and saved, [example](https://github.com/LTLA/scRNAseq/blob/master/inst/scripts/make-nestorowa-hsc-data.Rmd)
         ```
         ## describe how the data was obtained and processed
         count.file <- read.table("file.txt")
@@ -17,10 +17,17 @@ For every data set:
         saveRDS(counts, file = file.path(path, "counts.rds"))
         saveRDS(coldata, file = file.path(path, "coldata.rds"))
         ```
-    - `make-metadata.R` -- generate a csv file that will be stored in the `inst/extdata` folder of the package
+    - `make-metadata.R` -- generate a csv file that will be stored in the `inst/extdata` folder of the package, the result can look [like this](https://github.com/LTLA/scRNAseq/blob/master/inst/extdata/metadata-nestorowa-hsc.csv)
         ```
         write.csv(file = "../extdata/metadata-storeddata.csv", stringsAsFactors = FALSE, data.frame(...) )
         ```
-2. Provide function to generate the R object that will be exposed to the user
-  - 
-  - `.create_se()`
+2. **Provide functions to generate the R object that will be exposed to the user**
+  - scripts in `R/`
+    - `get_storeddata.R`
+        ```
+        get_data_hpca <- function() {
+            version <- "1.0.0"
+            se <- .create_se(file.path("hpca", version), has.rowdata=FALSE)
+        }
+        ```
+    - `create_se.R`
