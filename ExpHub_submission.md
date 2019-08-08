@@ -1,6 +1,6 @@
 For every data set:
 
-1. **Save data and metadata in ExpHub**
+1. **Save data and metadata in ExpHub** (documentation by [ExperimentHub](https://bioconductor.org/packages/3.10/bioc/vignettes/ExperimentHub/inst/doc/CreateAnExperimentHubPackage.html))
   - relevant scripts/Rmds in `inst/scripts/`
     - `make-data.Rmd` -- describe how the data stored in ExpHub was obtained and saved. [example Rmd](https://github.com/LTLA/scRNAseq/blob/master/inst/scripts/make-nestorowa-hsc-data.Rmd)
         ```
