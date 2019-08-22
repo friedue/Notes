@@ -1,7 +1,7 @@
-For every data set:
+For **every data set**:
 
-1. **Save data and metadata in ExpHub** (documentation by [ExperimentHub](https://bioconductor.org/packages/3.10/bioc/vignettes/ExperimentHub/inst/doc/CreateAnExperimentHubPackage.html))
-  - relevant scripts/Rmds in `inst/scripts/`
+## 1. Save data and metadata in ExpHub (documentation by [ExperimentHub](https://bioconductor.org/packages/3.10/bioc/vignettes/ExperimentHub/inst/doc/CreateAnExperimentHubPackage.html))
+  - .R or .Rmds stored in `inst/scripts/`
     - `make-data.Rmd` -- describe how the data stored in ExpHub was obtained and saved. [example Rmd](https://github.com/LTLA/scRNAseq/blob/master/inst/scripts/make-nestorowa-hsc-data.Rmd)
         ```
         ## describe how the data was obtained and processed
@@ -21,7 +21,7 @@ For every data set:
         ```
         write.csv(file = "../extdata/metadata-storeddata.csv", stringsAsFactors = FALSE, data.frame(...) )
         ```
-2. **Provide functions to generate the R object that will be exposed to the user**
+## 2. Provide functions to generate the R object that will be exposed to the user
   - scripts in `R/`
     - `get_storeddata.R`
         ```
