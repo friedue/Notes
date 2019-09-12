@@ -18,13 +18,32 @@ DimPlot(object = pbmc, reduction = "tsne")
 ## Seurat 2 vs. 3
 
 | Seurat v2.X	|	Seurat v3.X|
-|------------|--------------||`object@data`	| `GetAssayData(object = object)`||`object@raw.data` |	`GetAssayData(object = object, slot = "counts")`||`object@scale.data`|	`GetAssayData(object = object, slot = "scale.data")` ||`object@cell.names`	|`colnames(x = object)`||`rownames(x = object@data)`|	`rownames(x = object)`||`object@var.genes`	| `VariableFeatures(object = object)`||`object@hvg.info`	| `HVFInfo(object = object)`||`object@assays$assay.name`	|`object[["assay.name"]]`||`object@dr$pca`	| `object[["pca"]]` |
-|`GetCellEmbeddings(object = object, reduction.type = "pca")`|	`Embeddings(object = object, reduction = "pca")` || `GetGeneLoadings(object = object, reduction.type = "pca")`|	`Loadings(object = object, reduction = "pca")` ||`AddMetaData(object = object, metadata = vector, col.name = "name")` |	`object$name <- vector` || `object@meta.data$name` |	`object$name`||`object@idents`	| `Idents(object = object)`||`SetIdent(object = object, ident.use = "new.idents")` | `Idents(object = object) <- "new.idents")` |
+|------------|--------------|
+|`object@data`	| `GetAssayData(object = object)`|
+|`object@raw.data` |	`GetAssayData(object = object, slot = "counts")`|
+|`object@scale.data`|	`GetAssayData(object = object, slot = "scale.data")` |
+|`object@cell.names`	|`colnames(x = object)`|
+|`rownames(x = object@data)`|	`rownames(x = object)`|
+|`object@var.genes`	| `VariableFeatures(object = object)`|
+|`object@hvg.info`	| `HVFInfo(object = object)`|
+|`object@assays$assay.name`	|`object[["assay.name"]]`|
+|`object@dr$pca`	| `object[["pca"]]` |
+|`GetCellEmbeddings(object = object, reduction.type = "pca")`|	`Embeddings(object = object, reduction = "pca")` |
+| `GetGeneLoadings(object = object, reduction.type = "pca")`|	`Loadings(object = object, reduction = "pca")` |
+|`AddMetaData(object = object, metadata = vector, col.name = "name")` |	`object$name <- vector` |
+| `object@meta.data$name` |	`object$name`|
+|`object@idents`	| `Idents(object = object)`|
+|`SetIdent(object = object, ident.use = "new.idents")` | `Idents(object = object) <- "new.idents")` |
 | `SetIdent(object = object, cells.use = 1:10, ident.use = "new.idents")` | `Idents(object = object, cells = 1:10) <- "new.idents")`|
 |`StashIdent(object = object, save.name = "saved.idents")`| `object$saved.idents <- Idents(object = object)`|
 |`levels(x = object@idents)` |	`levels(x = objects)`|
-| `RenameIdent(object = object, old.ident.name = "old.ident", new.ident.name = "new.ident")`| `RenameIdents(object = object, "old.ident" = "new.ident")`||`WhichCells(object = object, ident = "ident.keep")` | `WhichCells(object = object, idents = "ident.keep")`||`WhichCells(object = object, ident.remove = "ident.remove")`|`WhichCells(object = object, idents = "ident.remove", invert = TRUE)`|
-|`WhichCells(object = object, max.cells.per.ident = 500)` |`WhichCells(object = object, downsample = 500)` || `WhichCells(object = object, subset.name = "name", low.threshold = low, high.threshold = high)`|`WhichCells(object = object, expression = name > low & name < high)` ||`FilterCells(object = object, subset.names = "name", low.threshold = low, high.threshold = high)` |	`subset(x = object, subset = name > low & name < high)` || `SubsetData(object = object, subset.name = "name", low.threshold = low, high.threshold = high)` |	`subset(x = object, subset = name > low & name < high)` |
+| `RenameIdent(object = object, old.ident.name = "old.ident", new.ident.name = "new.ident")`| `RenameIdents(object = object, "old.ident" = "new.ident")`|
+|`WhichCells(object = object, ident = "ident.keep")` | `WhichCells(object = object, idents = "ident.keep")`|
+|`WhichCells(object = object, ident.remove = "ident.remove")`|`WhichCells(object = object, idents = "ident.remove", invert = TRUE)`|
+|`WhichCells(object = object, max.cells.per.ident = 500)` |`WhichCells(object = object, downsample = 500)` |
+| `WhichCells(object = object, subset.name = "name", low.threshold = low, high.threshold = high)`|`WhichCells(object = object, expression = name > low & name < high)` |
+|`FilterCells(object = object, subset.names = "name", low.threshold = low, high.threshold = high)` |	`subset(x = object, subset = name > low & name < high)` |
+| `SubsetData(object = object, subset.name = "name", low.threshold = low, high.threshold = high)` |	`subset(x = object, subset = name > low & name < high)` |
 | `MergeSeurat(object1 = object1, object2 = object2)` | `merge(x = object1, y = object2)` |
 
 # Data
@@ -76,6 +95,20 @@ object <- SetAssayData(object = object,
                        assay.type = assay.type,
                        slot = "data",
                        new.data = normalized.data)
+```
+
+If there are multiple assays stored within the same Seurat object, one will manually have to select the "active" one:
+
+```
+> srt
+An object of class Seurat
+50120 features across 26335 samples within 3 assays
+Active assay: SCT (20844 features)
+ 2 other assays present: RNA, integrated
+ 2 dimensional reductions calculated: pca, umap
+
+> srt@active.assay # find out which one's active
+> DefaultAssay(srt) <- "SCT" # define another one
 ```
 
 ## Genes
