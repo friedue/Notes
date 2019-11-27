@@ -1,5 +1,7 @@
 * [Dropouts](#dropouts)
 * [Normalization](#norm)
+	* [Log-offset](#log)
+	* [MNN correction](#MNN)
 * [Smoothening & Imputation](#smooth)
 * [Dimensionality reduction & clustering](#dims)
 * [DE](#de)
@@ -78,6 +80,13 @@ sce <- computeSumFactors(sce, min.mean = 0.1, cluster=qckclust)
 
 sce <- normalize(sce, log_exprs_offset = log_offset)
 ```
+<a name="log"></a>
+### log-offset
+
+<a name="MNN"></a>
+### MNN-based expression correction
+
+- will yield **log-expression values**, not guaranteed that they're interpretable as log-counts! &rarr; useful for computing reduced dimensions and for visualizations, but probably not appropriate for DE analysis [Aaron @ github]( https://github.com/MarioniLab/scran/issues/5)
 
 <a name="smooth"></a>
 ## Smoothening
@@ -130,6 +139,7 @@ Avril Coghlan's write-up of [PCA](http://little-book-of-r-for-multivariate-analy
 
 * Pre-filtering of lowly expressed genes can have important effects on the results, particularly for some of the methods originally developed for analysis of bulk RNA-seq data
 * Generally, methods developed for bulk RNA-seq analysis do not perform notably worse than those developed specifically for scRNA-seq.
+* make sure to use **count-based** approaches, possibly by adding a covariate for the sample batch effect
 
 ---------
 
