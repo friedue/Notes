@@ -4,7 +4,11 @@
 	*	[R implementations](#rgseas) 
 		* [Fast GSEA](#fgsea)
 		* [clusterProfiler::GSEA](#clusterProfilerGSEA)
-		* [enrichPW](#enrichpw)
+			* [MSigDB pathways](#cp_gsea_msigdb)
+			* [KEGG pathways](#cp_gsea_kegg)
+			* [GO term categories](#cp_gsea_go)
+			* [REACTOME pathways](#cp_gsea_reactome)
+			* [clusterProfiler plots that can be generated with the resulting object](#cp_gsea_results)
 		* [time-course GSA](#tcgsa)
 * [single sample GSEA](#ssgsesa)
 	* [Differences to GSEA](#ssGSEAvsGSEA) 
@@ -111,69 +115,79 @@ P + ggtitle("Most strongly enriched pathway")
 <a name="clusterProfilerGSEA"></a>
 #### 2. clusterProfiler::GSEA
 
+For details on the clusterProfiler implementation of GSEA, see the [clusterProfiler book Chapter 2](https://yulab-smu.github.io/clusterProfiler-book/chapter2.html#gene-set-enrichment-analysis) and [Chapter 7](https://yulab-smu.github.io/clusterProfiler-book/chapter7.html).
+In short, it's actually the [`DOSE`](http://bioconductor.org/packages/release/bioc/vignettes/DOSE/inst/doc/DOSE.html) package that has the implementation and its default setting uses `fgsea`.
+
+Generally, the **input** consists of:
+
+1. a *sorted vector of values* where the names of the vector correspond to ENTREZ IDs (`geneList`), see [the wiki entry](https://github.com/GuangchuangYu/DOSE/wiki/how-to-prepare-your-own-geneList)
+2. a parameter indicating which **gene sets** should be tested, e.g. gene sets of MSigDB, KEGG, GO ontologies etc.
+
+While the `geneList` is always the same object, the `clusterProfiler` universe needs different functions depending on the *gene set*, i.e., there are separate functions that handle MSigDB's gmt files, Reactome pathways etc.
+
+<a name="cp_gsea_msigdb"></a>
+##### For MSigDB gmt files
+
+
+| Abbr. | Details | 
+|-------|---------|
+| H | hallmark gene sets |
+| C1| positional gene sets|
+| C2| curated gene sets|
+| C3 | motif gene sets |
+| C4 | computational gene sets |
+| C5 | GO gene sets |
+| C6 | oncogenic signatures |
+| C7 | immunologic signatures |
+
+See [Chapter 3](https://yulab-smu.github.io/clusterProfiler-book/chapter3.html#msigdb-analysis) for more details about the usage of the `msigdbr` package.
+
 ```
 library(clusterProfiler)
-# parse the gmt file into a TERM2GENE data.frame 
+## parse the gmt file into a TERM2GENE data.frame 
+gmtfile <- system.file("extdata", "c5.cc.v5.0.entrez.gmt", package="clusterProfiler")
 c5 <- read.gmt(gmtfile)
 
 ## alternatively, there's a function to retrieve specific sets directly:
+library(msigdbr)
 msigdbr(species = "Homo sapiens", category = "C3") %>%  dplyr::select(gs_name, entrez_gene)
 
-data(geneList, package="DOSE") # named and sorted vector where the names are ENTREZ IDs and the values are some rank statistic
-egmt_gsea <- GSEA(geneList, TERM2GENE=c5, verbose=FALSE)
+## get list of genes: named and sorted **vector** where the names are ENTREZ IDs and
+## the values are some rank statistic
+data(geneList, package="DOSE") 
 
-## hypergeometric enrichment analysis is also possible
-gene <- names(geneList)[abs(geneList) > 2]
-egmt_enricher <- enricher(gene, TERM2GENE=c5)
+## run GSEA
+egmt_gsea <- GSEA(geneList, TERM2GENE=c5, verbose=FALSE)
 ```
 
-The results can be used with:
+<a name="cp_gsea_kegg"></a>
+##### For KEGG pathways
 
-* `barplot` or `dotplot` [Reference](http://guangchuangyu.github.io/2015/06/dotplot-for-enrichment-result/), [clusterProfiler book](https://yulab-smu.github.io/clusterProfiler-book/)
-    - shows the **number of genes** associated with the **first 50 terms** (size) and the p-adjusted values for these terms (color)
-    - x-axis can be gene count or gene ratio
-    - count = core genes
-    - gene ratio = Count/setSize (# genes related to GO term / total number of sig genes) [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html)
-* `emapplot` = enrichment plot
-    - nodes = **gene sets** (top 50 most sign. enriched GO terms [Reference 1](https://www.r-bloggers.com/enrichment-map/) 
-    - edges = **gene overlap between gene sets**
-    - This technique finds functionally coherent gene-sets, such as pathways, that are statistically over-represented in a given gene list. [Reference 2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2981572/)
-    - Automated network layout groups related gene-sets into network clusters; mutually overlapping gene sets tend to cluster together
-    - `clusterProfiler` provides the R implementation of the [original cytoscape enrichment map](http://baderlab.org/Software/EnrichmentMap/)
-    - similar terms are grouped together [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html)
-    - size of the terms represents the number of genes that are significant from our list [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html) 
-    - network-based visualization method for gene-set enrichment results
-* `cnetplot` = category netplot
-    - nodes = **genes** (of the top 5 most sign. GO terms)
-    - edges = indicate whether a gene belongs to a given gene set
-    - depicts the linkages of genes and biological concepts (e.g. GO terms or KEGG pathways) as a network [Ref 3](https://yulab-smu.github.io/clusterProfiler-book/chapter12.html#gene-concept-network)
-    - color = fold changes of the significant genes associated with these terms [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html) 
-    - size of the GO terms = p-values of the terms
-    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-45-1.png)
-* `heatplot`
-    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-46-2.png)
-    
-    ```
-    If you are interested in significant processes that are not among the top five, 
-    you can subset your ego dataset to only display these processes:
-    
-    ## Subsetting the ego results without overwriting original `ego` variable
-    ego2 <- ego
-    ego2@result <- ego@result[c(1,3,4,8,9),]
-    
-    ## Plotting terms of interest
-    cnetplot(ego2, 
-             categorySize="pvalue", foldChange=OE_foldchanges, showCategory = 5, vertex.label.font=6)
-    ```
-    ![](https://hbctraining.github.io/DGE_workshop_salmon/img/cnetplot-2_salmon.png)
-    
-* `gseaplot(egmt_gsea, geneSetId = "X")` and `gseaplot2(edo2, geneSetID = 1:3, pvalue_table = TRUE, color = c("#E495A5", "#86B875", "#7DB0DD"), ES_geom = "dot")`
-    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-54-1.png)
-* `gsearank`
-    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-57-1.png)
+```
+kk2 <- gseKEGG(geneList     = geneList,
+               organism     = 'hsa',
+               nPerm        = 1000,
+               minGSSize    = 120,
+               pvalueCutoff = 0.05,
+               verbose      = FALSE)
+```
 
-<a name="enrichpw"></a>
-#### 2. enrichPW (ReactomePA package)
+<a name="cp_gsea_go"></a>
+##### For GO categories
+
+```
+ego3 <- clusterProfiler::gseGO(geneList     = geneList,
+              OrgDb        = org.Hs.eg.db,
+              ont          = "CC",
+              nPerm        = 1000,
+              minGSSize    = 100,
+              maxGSSize    = 500,
+              pvalueCutoff = 0.05,
+              verbose      = FALSE)
+```
+
+<a name="cp_gsea_reactome"></a>
+##### For Reactome pathways
 
 This is useful because its output can directly be used with `clusterProfiler::compareClusters`.
 However, it only performs GSEA on the REACTOME pathways.
@@ -225,6 +239,73 @@ y <- gsePathway(geneList, nPerm=10000,
                 pAdjustMethod="BH", verbose=FALSE)
 res <- as.data.frame(y)
 ```
+
+#### For CellMarkers
+
+>[By] manually curating over 100 000 published papers, 4124 entries including the cell marker information, tissue type, cell type, cancer information and source, were recorded. At last, **13 605 cell markers of 467 cell types in 158 human tissues/sub-tissues** and 9148 cell makers of 389 cell types in 81 mouse tissues/sub-tissues were collected and deposited in CellMarker. 
+[CellMarker Paper](https://doi.org/10.1093/nar/gky900)
+
+[CellMarker Website](http://biocc.hrbmu.edu.cn/CellMarker/download.jsp)
+
+Using CellMarkers with clusterProfiler:
+
+```
+cell_markers <- vroom::vroom('http://bio-bigdata.hrbmu.edu.cn/CellMarker/download/Human_cell_markers.txt') %>%
+   tidyr::unite("cellMarker", tissueType, cancerType, cellName, sep=", ") %>% 
+   dplyr::select(cellMarker, geneID) %>%
+   dplyr::mutate(geneID = strsplit(geneID, ', '))
+   
+y <- enricher(gene, TERM2GENE=cell_markers, minGSSize=1)
+```
+
+Code from [here](https://yulab-smu.github.io/clusterProfiler-book/chapter3.html#cell-marker)
+
+<a name="cp_gsea_results"></a>
+##### The results can be used with:
+
+* `barplot` or `dotplot` [Reference](http://guangchuangyu.github.io/2015/06/dotplot-for-enrichment-result/), [clusterProfiler book](https://yulab-smu.github.io/clusterProfiler-book/)
+    - shows the **number of genes** associated with the **first 50 terms** (size) and the p-adjusted values for these terms (color)
+    - x-axis can be gene count or gene ratio
+    - count = core genes
+    - gene ratio = Count/setSize (# genes related to GO term / total number of sig genes) [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html)
+* `emapplot` = enrichment plot
+    - nodes = **gene sets** (top 50 most sign. enriched GO terms [Reference 1](https://www.r-bloggers.com/enrichment-map/) 
+    - edges = **gene overlap between gene sets**
+    - This technique finds functionally coherent gene-sets, such as pathways, that are statistically over-represented in a given gene list. [Reference 2](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2981572/)
+    - Automated network layout groups related gene-sets into network clusters; mutually overlapping gene sets tend to cluster together
+    - `clusterProfiler` provides the R implementation of the [original cytoscape enrichment map](http://baderlab.org/Software/EnrichmentMap/)
+    - similar terms are grouped together [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html)
+    - size of the terms represents the number of genes that are significant from our list [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html) 
+    - network-based visualization method for gene-set enrichment results
+* `cnetplot` = category netplot
+    - nodes = **genes** (of the top 5 most sign. GO terms)
+    - edges = indicate whether a gene belongs to a given gene set
+    - depicts the linkages of genes and biological concepts (e.g. GO terms or KEGG pathways) as a network [Ref 3](https://yulab-smu.github.io/clusterProfiler-book/chapter12.html#gene-concept-network)
+    - color = fold changes of the significant genes associated with these terms [Ref4](https://hbctraining.github.io/DGE_workshop_salmon/lessons/functional_analysis_2019.html) 
+    - size of the GO terms = p-values of the terms
+    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-45-1.png)
+* `heatplot`
+    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-46-2.png)
+    
+    ```
+    If you are interested in significant processes that are not among the top five, 
+    you can subset your ego dataset to only display these processes:
+    
+    ## Subsetting the ego results without overwriting original `ego` variable
+    ego2 <- ego
+    ego2@result <- ego@result[c(1,3,4,8,9),]
+    
+    ## Plotting terms of interest
+    cnetplot(ego2, 
+             categorySize="pvalue", foldChange=OE_foldchanges, showCategory = 5, vertex.label.font=6)
+    ```
+    ![](https://hbctraining.github.io/DGE_workshop_salmon/img/cnetplot-2_salmon.png)
+    
+* `gseaplot(egmt_gsea, geneSetId = "X")` and `gseaplot2(edo2, geneSetID = 1:3, pvalue_table = TRUE, color = c("#E495A5", "#86B875", "#7DB0DD"), ES_geom = "dot")`
+    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-54-1.png)
+* `gsearank`
+    - ![](https://yulab-smu.github.io/clusterProfiler-book/clusterProfiler_files/figure-html/unnamed-chunk-57-1.png)
+
 
 <a name="tcgsa"></a>
 #### 3. TcGSA: time-course GSA
