@@ -22,3 +22,13 @@ ck.GO_bp <- compareCluster(clstcomp.list, fun = "enrichGO", OrgDb = org.Hs.eg.db
 dotplot(ck.GO_bp) + ggtitle("Overrepresented GO terms (Biological Processes)")
 
 ```
+
+Individual lists (no comparisons)
+
+```
+cp.GO_bp.ind <- lapply(clstcomp.list, function(x){
+    out <- enrichGO(x, OrgDb = org.Mm.eg.db, universe = unique(deg.dt$entrez), ont = "BP", pvalueCutoff = 0.05, pAdjustMethod = "BH")
+    out <- DOSE::setReadable(out, 'org.Mm.eg.db', 'ENTREZID')
+    return(out)
+})
+```
