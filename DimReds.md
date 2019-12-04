@@ -2,10 +2,14 @@
 
 we are concerned with defining similarities between two objects *i* and *j*  in the high dimensional input space *X* and low dimensional embedded space *Y* 
 
+>It is interesting to think about why basically each of the techniques is applicable in one particular research area and not common in other areas. For example, Independent Component Analysis (ICA) is used in signal processing, Non-Negative Matrix Factorization (NMF) is popular for text mining, Non-Metric Multi-Dimensional Scaling (NMDS) is very common in Metagenomics analysis etc., but it is rare to see e.g. NMF to be used for RNA sequencing data analysis. [Oskolkov](https://towardsdatascience.com/reduce-dimensions-for-single-cell-4224778a2d67)
+
 * PCA
 * UMAP
 * tSNE
 * diffusion map
+
+>linear dimensionality reduction techniques can not fully resolve the heterogeneity in the single cell data. (...) Linear dimension reduction techniques are good at preserving the global structure of the data (connections between all the data points) while it seems that for single cell data it is more important to keep the local structure of the data (connections between neighboring points). [Oskolkov](https://towardsdatascience.com/reduce-dimensions-for-single-cell-4224778a2d67)
 
 ## UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction
 
@@ -25,6 +29,12 @@ Cost function: Cross-Entropy --> probably the main reason for why UMAP can prese
 3. The manifold is locally connected.
 
 In contrast to tSNE, UMAP *estimates* the nearest-neighbors distances (with the [nearest-neighbor-descent algorithm](https://dl.acm.org/citation.cfm?id=1963487)), which relieves some of the computational burden
+
+From [Oskolkov](https://towardsdatascience.com/how-exactly-umap-works-13e3040e1668): 
+Both tSNE and UMAP essentially consist of two steps:
+
+1. Building a **graph** in high dimensions and computing the bandwidth of the exponential probability, σ, using the binary search and the fixed number of nearest neighbors to consider.
+2. **Optimization of the low-dimensional representation** via Gradient Descent. The second step is the bottleneck of the algorithm, it is consecutive and can not be multi-threaded. Since both tSNE and UMAP do the second step, it is not immediately obvious why UMAP can do it more efficiently than tSNE. 
 
 ### `n_neighbors`
 
