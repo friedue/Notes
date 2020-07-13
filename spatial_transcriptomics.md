@@ -59,7 +59,7 @@ from [Jesse Sadler](https://www.jessesadler.com/post/simple-feature-objects/)
 
 `sf class object` = `sfg` + `sfc` objects
 
-- basically a data frame with rows of rfeatures, columns of attributes and a special gemetry column with the spatial aspected of the features
+- basically a data frame with rows of features, columns of attributes and a special geometry column with the spatial aspects of the features
 	- `sf` object: collection of simple features represented by a data frame
 	- `sfg` object: geometry of a single feature 
 	- `sfc` object: geometry *column* with the spatial attributes of the object printed above the data frame
@@ -93,3 +93,24 @@ The `sf` objects combine the spatial information with any number of attributes, 
 
 They can be created with the `st_sf()` function
 	* joins a df to an sfg object
+	
+## Generating a point pattern (`ppp`)  object for `markvariogram` function (`spatstat` package)
+
+```
+## extract coordinates
+spatial.coords <- reducedDim(sce.obj, coords_accessor)
+
+## generate ppp object
+  x.coord = spatial.coords[, 1]
+  y.coord = spatial.coords[, 2]
+
+  pp <- ppp(
+    x = x.coord,
+    y = y.coord,
+    xrange = range(x.coord),
+    yrange = range(y.coord)
+  )
+pp[["marks"]] <- as.data.frame(x = t(x = exprs_data))
+mv <- markvario(X = pp, normalise = TRUE, ...)
+```
+	
