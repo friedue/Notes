@@ -1,7 +1,4 @@
 ---
-title: "Exploring heteroskedasticity"
-author: "Friederike Dündar"
-date: "12/22/2020"
 output:
   html_document:
     code_folding: hide
@@ -10,6 +7,8 @@ output:
 editor_options: 
   chunk_output_type: console
 ---
+
+# Exploring heteroskedasticity
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE)
