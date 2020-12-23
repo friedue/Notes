@@ -1,14 +1,14 @@
 ---
-title: "Exploring heteroskedasticity"
-author: "Friederike Dündar"
-date: "12/22/2020"
 output:
   html_document:
     code_folding: hide
     theme: paper
+    keep_md: true
 editor_options: 
   chunk_output_type: console
 ---
+
+# Exploring heteroskedasticity
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE)
@@ -179,6 +179,18 @@ plot(mean.log2exprs, cvs.log2, main = "Coefficient of variation of log-transform
 
 The value that I named "magnitude of noise" (`noise.mag` in the code) happens to match the definition of the [**coefficient of variation**](https://en.wikipedia.org/wiki/Coefficient_of_variation)
 
+### Fold changes are also heteroskedastic
+
+[Love & Huber](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8) demonstrated heteroskedasticity as "variance of log-fold changes depending on mean count".
+
+>weakly expressed genes seem to show much stronger **differences** between the compared mouse strains than strongly expressed genes. This phenomenon, seen in most HTS datasets, is a direct consequence of dealing with count data, in which **ratios are inherently noisier when counts are low**
+
+![](https://media.springernature.com/full/springer-static/image/art%3A10.1186%2Fs13059-014-0550-8/MediaObjects/13059_2014_Article_550_Fig2_HTML.jpg)
+
+The fanning out on the left indicates that the logFC often tend to be higher for very lowly expressed genes.
+
+The reasons are the same as for the underlying counts.
+
 
 ## Why does the heteroscedasticity matter?
 
@@ -205,6 +217,11 @@ Here are the direct quotes from [McCarthy et al.](https://academic.oup.com/nar/a
 >The first term arises from the technical variability associated with sequencing, and gradually decreases with expected count size, while biological variation remains roughly constant. For large counts, the CV is determined mainly by biological variation.
 
 >The technical CV decreases as the size of the counts increases. BCV on the other hand does not. BCV is therefore likely to be the dominant source of uncertainty for high-count genes, so reliable estimation of BCV is crucial for realistic assessment of differential expression in RNA-Seq experiments. If the abundance of each gene varies between replicate RNA samples in such a way that the genewise standard deviations are proportional to the genewise means, a commonly occurring property of measurements on physical quantities, then it is reasonable to suppose that BCV is approximately constant across genes.
+
+## What does "overdispersion" mean and how is it related?
+
+Overdispersion refers to the observation that the variance tends to be *greater* than the mean expression. 
+This again is an argument against the use of a simple Poisson model where the relationship between mean and variance would be fixed as `mean = variance`. 
 
 ## Summary
 
