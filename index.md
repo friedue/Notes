@@ -1,17 +1,4 @@
----
-output:
-  html_document:
-    code_folding: hide
-    theme: paper
-    keep_md: true
-editor_options: 
-  chunk_output_type: console
----
-
 # Exploring heteroskedasticity
-
-
-
 
 
 
