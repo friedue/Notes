@@ -30,13 +30,6 @@ As described by [Law et al.](https://genomebiology.biomedcentral.com/articles/10
 
 
 ```r
-## Greater variability across replicates for low-count genes
-counts(dds, normalized = TRUE) %>% .[,1:2] %>% log2 %>% 
-  plot(., main = "Greater variability of library-size-norm,\nlog-transformed counts for small count genes")
-```
-
-
-```r
 ## meanSDPlot (vsn library)
 rowV = function(x, Mean) {
   sqr     = function(x)  x*x
