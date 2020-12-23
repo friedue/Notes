@@ -60,11 +60,6 @@ plot(mean.log2exprs, sd.log2exprs, main = "Sd depends on the mean\nlog-transform
 
 ![](RNA_heteroskedasticity_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
-```r
-#vsn::meanSdPlot(log2(counts(dds[, dds$condition == "WT"], normalized =TRUE)))
-#plot(mean.exprs, vars.exprs, main = "Var depends on the mean", xlim = c(0,1000), ylim = c(0, 2000))
-#plot(mean.exprs, vars.exprs, main = "Var depends on the mean", xlim = c(0,20), ylim = c(0, 20))
-```
 
 The greater the mean expression, the greater the variance.
 The greater the log-transformed expression, the smaller the variance as the average expression value and the actual expression value (`x`) are closer together.
