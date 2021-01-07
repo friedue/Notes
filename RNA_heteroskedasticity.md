@@ -1,36 +1,6 @@
----
-output:
-  html_document:
-    code_folding: hide
-    theme: paper
-    keep_md: true
-editor_options: 
-  chunk_output_type: console
----
-
 # Exploring heteroskedasticity
 
-
-
-
-
-
-```r
-## read counts
-featCounts <- read.table("~/Documents/Teaching/ANGSD/data/featCounts_Gierlinski_genes.txt", header=TRUE, row.names = 1)
-names(featCounts) <- names(featCounts) %>% gsub(".*alignment\\.", "", .) %>% gsub("_Aligned.*", "",.)
-counts.mat <- as.matrix(featCounts[, -c(1:5)])
-
-## sample info
-samples <- data.frame(condition = gsub("_.*", "", colnames(counts.mat)),
-  row.names = colnames(counts.mat))
-samples$condition <- ifelse(samples$condition == "SNF2", "SNF2.KO", samples$condition)
-
-## DESeq2 object
-dds <- DESeqDataSetFromMatrix(counts.mat, colData = samples, design = ~condition)
-# normalizing for diffs in sequencing depth and abundances per sample
-dds <- estimateSizeFactors(dds) 
-```
+*For the R code used to generate the images shown here, see the corresponding [Rmd](https://github.com/friedue/Notes/blob/master/RNA_heteroskedasticity.Rmd).*
 
 **Heteroskedasticity** = absence of homoskedasticity.
 Where homoscedasticity is defined as ["the property of having equal statistical variances"](https://www.merriam-webster.com/dictionary/homoscedasticity).
@@ -42,56 +12,13 @@ As described by [Law et al.](https://genomebiology.biomedcentral.com/articles/10
 > Large log-couts have much larger standard deviations than small counts.
 > A logarithmic transformation counteracts this, but it overdoes it. Now, large counts have smaller standard deviations than small log-counts.
 
-
-```r
-## Greater variability across replicates for low-count genes
-counts(dds, normalized = TRUE) %>% .[,1:2] %>% log2 %>% 
-  plot(., main = "Greater variability of library-size-norm,\nlog-transformed counts for small count genes")
-```
-
-
-```r
-## meanSDPlot (vsn library)
-rowV = function(x, Mean) {
-  sqr     = function(x)  x*x
-  n       = rowSums(!is.na(x))
-  n[n<1]  = NA
-  return(rowSums(sqr(x-Mean))/(n-1))
-}
-
-mean.exprs   = counts(dds[, dds$condition == "WT"], normalized = TRUE) %>% rowMeans(., na.rm = TRUE)
-vars.exprs   = counts(dds[, dds$condition == "WT"], normalized = TRUE) %>% 
-  rowV(., Mean = mean.exprs)
-sd.exprs <- sqrt(vars.exprs)
-#vars <- sqrt(rowSums((x-means)^2)/(nlibs-1))
-
-
-## log-transformed data
-mean.log2exprs   = counts(dds[, dds$condition == "WT"], normalized = TRUE) %>% log2 %>%
-  rowMeans(., na.rm = TRUE)
-vars.log2exprs   = counts(dds[, dds$condition == "WT"], normalized = TRUE) %>% log2 %>%
-  rowV(., Mean = mean.log2exprs)
-sd.log2exprs <- sqrt(vars.log2exprs)
-#vars <- sqrt(rowSums((x-means)^2)/(nlibs-1))
-
-par(mfrow=c(1,2))
-plot(log2(mean.exprs), log2(sd.exprs), main = "Sd depends on the mean", cex = .2, lwd = .1)
-plot(mean.log2exprs, sd.log2exprs, main = "Sd depends on the mean\nlog-transformed counts", cex = .2, lwd = .1)
-```
-
 ![](RNA_heteroskedasticity_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
-```r
-#vsn::meanSdPlot(log2(counts(dds[, dds$condition == "WT"], normalized =TRUE)))
-#plot(mean.exprs, vars.exprs, main = "Var depends on the mean", xlim = c(0,1000), ylim = c(0, 2000))
-#plot(mean.exprs, vars.exprs, main = "Var depends on the mean", xlim = c(0,20), ylim = c(0, 20))
-```
-
-The greater the mean expression, the greater the variance.
-The greater the log-transformed expression, the smaller the variance as the average expression value and the actual expression value (`x`) are closer together.
+Left: The greater the mean expression, the greater the variance.
+Right: The greater the log-transformed expression, the smaller the variance as the average expression value and the actual expression value (`x`) are closer together.
 
 <details>
-  <summary>Click here for some toy examples to illustrate that point.</summary>
+  <summary>Click here for some toy examples to illustrate why log-transformation turns the relationship on its head.</summary>
 
 
 ```r
@@ -130,88 +57,22 @@ log2(10) - log2(9)
 
 Intuitively, one can also see that the "spread" of the data points is greater for low-count values:
 
-
-```r
-counts(dds, normalized = TRUE) %>% .[,c(1,2)] %>% log2 %>% plot
-```
-
 ![](RNA_heteroskedasticity_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
+Let's have a closer look at two example genes, one that's highly and one that's lowly expressed
 
-```r
-# example with high expression 
-mean.exprs %>% sort %>% tail # YKL060C
-# example with low expression
-mean.exprs[mean.exprs > 0] %>% sort %>% head #YPR099C
-```
+While the absolute values of SD and Variance are higher for high-count genes (in the absence of log-transformation),
+the **magnitude** of the noise is greater for the low-count genes.
+The following plots display the actual normalized expression values (not log-transformed) with the SD and the ratio `SD/mean` noted in the title.
 
-```r
-high.exprsd <- "YKL060C"
-low.exprsd <- "YPR099C"
-```
-
-While the absolute values of SD/Var are higher for high-count genes,
-the **magnitude** of the noise is greater for the low-count genes:
-
-
-```r
-noise.mag <- sd.exprs[c(high.exprsd, low.exprsd)] / mean.exprs[c(high.exprsd, low.exprsd)]
-
-p1 <- counts(dds[high.exprsd,], normalized=TRUE) %>% t %>% 
-  as.data.table(., keep.rownames = "sample") %>% 
-  ggplot(., aes(x = gsub("_.*", "", sample), y = YKL060C)) + 
-  geom_point(size = 4, alpha = .5, shape = 1) + 
-  xlab("condition") + 
-  ggtitle("Highly expressed gene", subtitle = paste("SD:", sd.exprs[high.exprsd], "\nSD/mean:", noise.mag[high.exprsd]))
-
-p2 <- counts(dds[low.exprsd,], normalized=TRUE) %>% t %>%
-  as.data.table(., keep.rownames = "sample") %>%
-  ggplot(., aes(x = gsub("_.*", "", sample), y = YPR099C)) +
-  geom_point(size = 4, alpha = .5, shape = 1) + 
-  xlab("condition") + 
-  ggtitle("Lowly expressed gene", subtitle = paste("SD:", sd.exprs[low.exprsd], "\nSD/mean:", noise.mag[low.exprsd]))
-
-p1 + p2 + plot_annotation(title = "Lib-size norm. counts")
-```
 
 ![](RNA_heteroskedasticity_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
-
-```r
-noiselog2.mag <- sd.log2exprs[c(high.exprsd, low.exprsd)] / mean.log2exprs[c(high.exprsd, low.exprsd)]
-
-p1 <- log2(counts(dds[high.exprsd,], normalized=TRUE)) %>% t %>% 
-  as.data.table(., keep.rownames = "sample") %>% 
-  ggplot(., aes(x = gsub("_.*", "", sample), y = YKL060C)) + 
-  geom_point(size = 4, alpha = .5, shape = 1) + 
-  xlab("condition") + 
-  ggtitle("Highly expressed gene", subtitle = paste("SD:", sd.log2exprs[high.exprsd], "\nSD/mean:", noiselog2.mag[high.exprsd]))
-
-p2 <- log2(counts(dds[low.exprsd,], normalized=TRUE)) %>% t %>%
-  as.data.table(., keep.rownames = "sample") %>%
-  ggplot(., aes(x = gsub("_.*", "", sample), y = YPR099C)) +
-  geom_point(size = 4, alpha = .5, shape = 1) + 
-  xlab("condition") + 
-  ggtitle("Lowly expressed gene", subtitle = paste("SD:", sd.log2exprs[low.exprsd], "\nSD/mean:", noiselog2.mag[low.exprsd]))
-
-p1 + p2 + plot_annotation(title = "Lib-size norm., log2-transformed counts")
-```
 
 ![](RNA_heteroskedasticity_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
 This is true irrespective of log-transformation:
 
-
-```r
-cvs <- sd.exprs/mean.exprs
-cvs.log2 <- sd.log2exprs / mean.log2exprs
-
-par(mfrow = c(1,2))
-plot(log2(mean.exprs), log2(cvs), main = "Coefficient of variation of counts")
-plot(mean.log2exprs, cvs.log2, main = "Coefficient of variation of log-transformed counts")
-```
-
 ![](RNA_heteroskedasticity_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
-
 
 The value that I named "magnitude of noise" (`noise.mag` in the code) happens to match the definition of the [**coefficient of variation**](https://en.wikipedia.org/wiki/Coefficient_of_variation)
 
