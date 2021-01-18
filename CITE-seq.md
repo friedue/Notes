@@ -1,15 +1,54 @@
-# CITE-seq
+CITE-seq
+===========
 
 Cellular indexing of transcriptomes and epitopes by sequencing (CITE-seq) is a 
 technique that quantifies both gene expression and the abundance of selected 
-surface proteins in each cell simultaneously (Stoeckius et al. 2017). 
+surface proteins in each cell simultaneously ([Stoeckius et al. 2017](https://www.nature.com/articles/nmeth.4380)). 
 
 In this approach, cells are first labelled with **antibodies that have been 
 conjugated to synthetic RNA tags**.
 A cell with a higher abundance of a target protein will be bound by more antibodies, 
 causing more molecules of the corresponding antibody-derived tag (ADT) to be attached to that cell. 
 
-How should the ADT data be incorporated into the analysis?
+![](https://citeseq.files.wordpress.com/2017/10/antibody_transparent.png?w=700)
+
+**Cell Hashing** is based on the exact same principle except that one aims to find a target that's ubiquitously expressed across all cells within the samples. [Stoeckius et al., 2018](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-018-1603-1)
+
+BioLegend supports the protocols with [TotalSeq Reagents](https://www.biolegend.com/en-us/totalseq), i.e. customized antibodies suitable for 10X Genomics' sequencing prep.
+For the differences between TotalSeq A, B, C see [10X Genomics reply](https://kb.10xgenomics.com/hc/en-us/articles/360019665352-What-is-the-difference-between-TotalSeq-A-B-and-C-) -- in short, their differences have to do with the different sequencing chemistries of different 10X Genomics' protocols.
+
+--------------
+
+* [How SpaceRanger handles CITE-seq data](#spaceranger)
+* [How to code with CITE-seq data](#code) (mostly excerpts from [OSCA](http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html))
+	* [Reading in](#start) 
+	* [QC](#qc)
+	* [Normalization](#normalizing)
+	* [Clustering](#clustering)
+	* [Integration with expression data](#combi)
+
+--------------
+
+<a name="spaceranger"></a>
+## SpaceRanger considerations
+
+* `spaceRanger` doesn't explicitly support CITE-seq, but they support generic "antibody capture" results
+	- e.g. dextramers, antigens 
+* The entries in their `metrics_summary.csv` are explained [here](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/output/antibody-metrics)
+	- e.g. `Antibody: Fraction Antibody Reads in Aggregate Barcodes`: Fraction of reads lost after removing aggregate barcodes.
+* One specific issue with antibodies are **protein aggregates** that cause a few GEMs to have extremely high UMI counts. 
+	- "Currently, we consider a barcode an aggregate if it has more than 10K reads, 50% of which were corrected [`$`](#correction)" [Ref](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/antibody)
+	- in addition, "Cell Ranger directly uses protein counts to deduce aggregation events.", i.e. "seeing high counts of many unrelated proteins in a GEM is a sign that such a GEM contains protein aggregates" [Ref](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/antibody) - if >5 antibodies with min. 1000 counts are detected, GEMs that are in the 25 highest counts across all GEMs will be flagged if the required number of antibodies exceed a pre-deinfed threshold
+	- a high correction rate is therefore used to flag for protein aggregation
+	- barcodes with evidence of protein aggregation are removed from the final feature-barcode matrix 
+* "Antibody aggregation could be triggered by partial unfolding of its domains, leading to monomer-monomer association followed by nucleation and growth. Although the aggregation propensities of antibodies and antibody-based proteins can be affected by the external experimental conditions, they are strongly dependent on the intrinsic antibody properties as determined by their sequences and structures" [Li et al., 2016](https://www.mdpi.com/2073-4468/5/3/19)
+
+<a name="correction"></a>
+`$`*CellRanger's UMI correction*: Before counting UMIs, Cell Ranger attempts to **correct for sequencing errors** in the UMI sequences. Reads that were confidently mapped to the transcriptome are placed into groups that share the same barcode, UMI, and gene annotation. If two groups of reads have the same barcode and gene, but their UMIs differ by a single base (i.e., are Hamming distance 1 apart), then one of the UMIs was likely introduced by a substitution error in sequencing. In this case, the UMI of the less-supported read group is corrected to the UMI with higher support. [Ref](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview)
+
+
+<a name="code"></a>
+**[How should the ADT data be incorporated into the analysis?](http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html#quality-control-1)**
 
 While we have counts for both ADTs and transcripts, there are fundamental differences
 in nature of the data that make it difficult to treat the former as additional features
@@ -21,7 +60,8 @@ in the latter:
 
 [OSCA](http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html)
 
-# Reading in the data
+<a name="start"></a>
+## Reading in the data
 
 ```
 # CellRanger data here:
@@ -52,6 +92,7 @@ counts(altExp(sce)) <- as.matrix(counts(altExp(sce)))
 counts(altExp(sce))[,1:10] # sneak peek
 ```
 
+<a name="qc"></a>
 ## QC 
 
 ### Genes: low mito content!
@@ -88,7 +129,8 @@ discard <- ab.discard | mito.discard
 sce <- sce[,!discard]
 ```
 
-# Normalizing ADTs
+<a name="normalizing"></a>
+## Normalizing ADTs
 
 >simplest approach is to normalize on the total ADT counts
 >However, ideally, we would like to compute size factors that adjust for the composition biases. This usually requires an assumption that most ADTs are not differentially expressed between cell types/states.
@@ -111,8 +153,8 @@ sizeFactors(altExp(sce)) <- sf.amb
 sce <- logNormCounts(sce, use.altexps=TRUE)
 ```
 
-
-# Clustering
+<a name="clustering"></a>
+## Clustering
 
 >Unlike transcript-based counts, feature selection is largely unnecessary for analyzing ADT data. This is because feature selection has already occurred during experimental design where the manual choice of target proteins means that all ADTs correspond to interesting features by definition
 > ADT abundances are cleaner (larger counts, stronger signal) for more robust identification of broad cell types
@@ -130,8 +172,23 @@ colLabels(altExp(sce)) <- factor(clusters.adt)
 plotTSNE(altExp(sce), colour_by="label", text_by="label", text_col="red")
 ```
 
-# Integration with gene expression data
+<a name="combi"></a>
+## Integration with gene expression data
 
 > If the aim is to test for differences in the functional readout (e.g. using antibodies to target the influenza peptide-MHCII complexes), a natural analysis strategy is to *use the transcript data for clustering* (Figure 20.13) and perform differential testing between clusters or conditions for the relevant ADTs. The main appeal of this approach is that it avoids data snooping (Section 11.5.1) as the clusters are defined without knowledge of the ADTs. This improves the statistical rigor of the subsequent differential testing on the ADT abundances
 
 More ideas: <http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html#integration-with-gene-expression-data>
+
+## Hash tagging
+
+From [Stoeckius et al., 2018](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-018-1603-1#Sec18):
+
+>HTO raw counts were normalized using centered log ratio (CLR) transformation, where counts were divided by the geometric mean of an HTO across cells and log-transformed
+>
+
+Seurat's `HTODemux()` function
+
+* k-medoid clustering on normalized HTO values --> cells are separated into *K* clusters
+* "negative" distribution: cluster with lowest average value = negative group for that HTO
+* .99 quantile of NB fit used as a threshold to classify cells as positive or negative
+* cells with more than one positive HTO call: doublets
