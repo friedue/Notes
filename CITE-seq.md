@@ -19,7 +19,7 @@ For the differences between TotalSeq A, B, C see [10X Genomics reply](https://kb
 
 --------------
 
-* [How SpaceRanger handles CITE-seq data](#spaceranger)
+* [How CellRanger handles CITE-seq data](#cellranger)
 * [How to code with CITE-seq data](#code) (mostly excerpts from [OSCA](http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html))
 	* [Reading in](#start) 
 	* [QC](#qc)
@@ -29,10 +29,10 @@ For the differences between TotalSeq A, B, C see [10X Genomics reply](https://kb
 
 --------------
 
-<a name="spaceranger"></a>
-## SpaceRanger considerations
+<a name="cellranger"></a>
+## CellRanger considerations
 
-* `spaceRanger` doesn't explicitly support CITE-seq, but they support generic "antibody capture" results
+* `CellRanger` doesn't explicitly support CITE-seq, but they support generic "antibody capture" results
 	- e.g. dextramers, antigens 
 * The entries in their `metrics_summary.csv` are explained [here](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/output/antibody-metrics)
 	- e.g. `Antibody: Fraction Antibody Reads in Aggregate Barcodes`: Fraction of reads lost after removing aggregate barcodes.
