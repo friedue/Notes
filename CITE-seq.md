@@ -8,7 +8,7 @@ surface proteins in each cell simultaneously ([Stoeckius et al. 2017](https://ww
 In this approach, cells are first labelled with **antibodies that have been 
 conjugated to synthetic RNA tags**.
 A cell with a higher abundance of a target protein will be bound by more antibodies, 
-causing more molecules of the corresponding antibody-derived tag (ADT) to be attached to that cell. 
+causing more molecules of the corresponding antibody-derived tag (ADT) to be attached to that cell. [Ref.OSCA](http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html)
 
 ![](https://citeseq.files.wordpress.com/2017/10/antibody_transparent.png?w=700)
 
@@ -50,6 +50,16 @@ For the differences between TotalSeq A, B, C see [10X Genomics reply](https://kb
 <a name="code"></a>
 **[How should the ADT data be incorporated into the analysis?](http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html#quality-control-1)**
 
+# Technical info from 10X
+
+* how 10X measures the antibody levels
+    - [Algorithm details](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/antibody)
+    - [Antibody metrics](https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/output/antibody-metrics)
+    
+* TotalSeq-C is a line of antibody-oligonucleotide conjugates supplied by BioLegend that are compatible with the Single Cell 5' assay. The Feature Barcode sequence appears at a fixed position (base 10) in the R2 read.
+
+# How should the ADT data be incorporated into the analysis?
+
 While we have counts for both ADTs and transcripts, there are fundamental differences
 in nature of the data that make it difficult to treat the former as additional features
 in the latter:
@@ -58,10 +68,13 @@ in the latter:
 * coverage of the ADTs is much deeper (sequencing resources are concentrated into a smaller number of features)
 * use of antibodies against protein targets involves consideration of separate biases compared to those observed for transcripts.
 
-[OSCA](http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html)
+from [OSCA](http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html)
 
 <a name="start"></a>
 ## Reading in the data
+
+from [OSCA](http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html)
+
 
 ```
 # CellRanger data here:
