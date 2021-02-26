@@ -12,6 +12,8 @@ causing more molecules of the corresponding antibody-derived tag (ADT) to be att
 
 ![](https://citeseq.files.wordpress.com/2017/10/antibody_transparent.png?w=700)
 
+![](https://edit.nordicbiosite.com/app/uploads/compatibility_figure_v1_totalseq.png)
+
 **Cell Hashing** is based on the exact same principle except that one aims to find a target that's ubiquitously expressed across all cells within the samples. [Stoeckius et al., 2018](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-018-1603-1)
 
 BioLegend supports the protocols with [TotalSeq Reagents](https://www.biolegend.com/en-us/totalseq), i.e. customized antibodies suitable for 10X Genomics' sequencing prep.
