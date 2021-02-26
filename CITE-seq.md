@@ -26,6 +26,7 @@ For the differences between TotalSeq A, B, C see [10X Genomics reply](https://kb
 	* [Normalization](#normalizing)
 	* [Clustering](#clustering)
 	* [Integration with expression data](#combi)
+*  [Hash tags](#hto)
 
 --------------
 
@@ -192,6 +193,7 @@ plotTSNE(altExp(sce), colour_by="label", text_by="label", text_col="red")
 
 More ideas: <http://bioconductor.org/books/release/OSCA/integrating-with-protein-abundance.html#integration-with-gene-expression-data>
 
+<a name="hto"></a>
 ## Hash tagging
 
 From [Stoeckius et al., 2018](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-018-1603-1#Sec18):
@@ -205,3 +207,9 @@ Seurat's `HTODemux()` function
 * "negative" distribution: cluster with lowest average value = negative group for that HTO
 * .99 quantile of NB fit used as a threshold to classify cells as positive or negative
 * cells with more than one positive HTO call: doublets
+
+[OSCA recommends `DropletUtils`](http://bioconductor.org/books/release/OSCA/droplet-processing.html#demultiplexing-on-hto-abundance): `hashedDrops()`
+
+> assuming that each HTO has a bimodal distribution where the lower peak corresponds to ambient contamination in cells that do not belong to that HTO’s sample. Counts are then averaged across all cells in the lower mode to obtain the relative abundance of that HTO 
+
+
