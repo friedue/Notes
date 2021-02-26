@@ -38,4 +38,8 @@ scVelo is based on `adata`
 
 AnnData objects can be sliced like dataframes: `adata_subset = adata[:, list_of_gene_names]`. For more details, see the [anndata docs](https://anndata.readthedocs.io/en/latest/api.html).
 
-For getting a better understanding of `AnnData`, it probably serves to look at a general `pandas` tutorial, e.g. [this one](https://blog.jetbrains.com/datalore/2021/02/25/pandas-tutorial-10-popular-questions-for-python-data-frames/)
+### Additional resources:
+
+* For getting a better understanding of `AnnData`, it probably serves to look at a general `pandas` tutorial, e.g. [this one](https://blog.jetbrains.com/datalore/2021/02/25/pandas-tutorial-10-popular-questions-for-python-data-frames/)
+* A good overview of typical `scanpy` commands (incl. PCA, UMAP), is given by the [PBMC tutorial](https://scanpy-tutorials.readthedocs.io/en/latest/pbmc3k.html).
+* The [complete run-down of **scVelo** and visualization commands](https://scvelo.readthedocs.io/VelocityBasics.html)
