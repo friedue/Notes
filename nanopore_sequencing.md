@@ -13,7 +13,7 @@ Details of the methods were taken from [Deamer et al., 2016](https://www.nature.
 * the **nanopore** = biosensor _and_ only passageway for exchange between the ionic solution on two sides of a membrane
   - ionic conductivity through the narrowest region of the nanopore is particularly sensitive to the presence of a nucleobase's mass and its associated electrical field
   - different bases will invoke different changes in the ionic current levels that pass through the pore
-* there's usuallly **5 bases** present within the narrowest spot of the nanopore!
+* there's usually **5 bases** present within the narrowest spot of the nanopore!
 * the DNA molecule is prepared for sequencing
     - fragmentation (mostly to achieve uniformity in the fragment size distributions)
     - **adapters** at both ends
