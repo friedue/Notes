@@ -73,6 +73,21 @@ It was preceded by `Albacore`.
 calling speed. While the two basecallers have coexisted for about a year, ONT has discontinued
 development on Albacore in favour of the more performant Guppy. [ref](https://www.biorxiv.org/content/early/2019/02/07/543439.full.pdf)
 
+### Megalodon
+
+Megalodon is a command line tool provided by Oxford Nanopore that extracts modified base (ie methylation) calls from raw nanopore reads. It runs on top of Guppy.
+
+[GitHub](https://github.com/nanoporetech/megalodon)
+[Documentation](https://nanoporetech.github.io/megalodon/)
+
+### ReadUntil
+
+ReadUntil is a mechanism to eject reads from nanopores based on a computational decision. This enables dynamic targeted sequencing (for example, depletion of human reads if we're looking for bacterial genomes, or depletion of species we have already confidently detected).
+
+[source](https://github.com/nanoporetech/read_until_api)
+[readfish implementation](https://github.com/LooseLab/readfish)
+[UNCALLED implementation](https://github.com/skovaka/UNCALLED)
+
 ## Tutorials & software resources
 
 * [ONT Tutorial Basic QC](https://github.com/nanoporetech/ont_tutorial_basicqc)
@@ -81,3 +96,5 @@ development on Albacore in favour of the more performant Guppy. [ref](https://ww
 * [poretools Jupyter Notebook](https://nbviewer.jupyter.org/github/arq5x/poretools/blob/master/poretools/ipynb/test_run_report.ipynb), [poretools docs](https://poretools.readthedocs.io/en/latest/)
 * [minimap2](https://github.com/lh3/minimap2#install)
 * [de.NBI Nanopore Training Course](https://denbi-nanopore-training-course.readthedocs.io/en/latest/index.html)
+* [Nanopore read accuracy paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-018-1462-9)
+* [Cloud-based tools for nanopore data analysis](https://nanoporetech.com/nanopore-sequencing-data-analysis)
