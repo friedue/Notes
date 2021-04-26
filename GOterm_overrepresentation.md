@@ -32,3 +32,6 @@ cp.GO_bp.ind <- lapply(clstcomp.list, function(x){
     return(out)
 })
 ```
+
+* `geneRatio` should be number of genes that overlap gene set divided by size of gene set
+* the number in parentheses for the clusterCompare plot corresponds to the number of genes that were in that group
