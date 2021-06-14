@@ -20,6 +20,7 @@ library(magrittr)
 library(data.table)
 library(ggplot2); theme_set(theme_bw(base_size = 12))
 library(patchwork)
+library(scales)
 # should have the DESeq object, DESeq.ds
 #load("~/Documents/Teaching/ANGSD/data/RNAseqGierlinski.RData")
 ```
@@ -48,7 +49,7 @@ Historically, **log-transformation** was proposed to counteract heteroscedastici
 However, read counts retain unequal variabilities, even after log-transformation.
 As described by [Law et al.](https://genomebiology.biomedcentral.com/articles/10.1186/gb-2014-15-2-r29):
 
-> Large log-couts have much larger standard deviations than small counts.
+> Large log-counts have much larger standard deviations than small counts.
 > A logarithmic transformation counteracts this, but it overdoes it. Now, large counts have smaller standard deviations than small log-counts.
 
 ```{r eval=FALSE}
@@ -171,9 +172,20 @@ This is true irrespective of log-transformation:
 cvs <- sd.exprs/mean.exprs
 cvs.log2 <- sd.log2exprs / mean.log2exprs
 
-par(mfrow = c(1,2))
-plot(log2(mean.exprs), log2(cvs), main = "Coefficient of variation of counts")
-plot(mean.log2exprs, cvs.log2, main = "Coefficient of variation of log-transformed counts")
+#par(mfrow = c(1,2))
+#plot(log2(mean.exprs), log2(cvs), main = "Coefficient of variation of counts")
+#plot(mean.log2exprs, cvs.log2, main = "Coefficient of variation of log-transformed counts")
+p1 <- ggplot(data.frame(meanExprs = mean.exprs, noise.mag = cvs),
+    aes(x = mean.exprs, y = noise.mag)) + geom_point() +
+    scale_y_continuous(trans = log2_trans()) +
+    scale_x_continuous(trans=log2_trans()) + 
+    ggtitle("Coefficient of variation of counts")
+p2 <- ggplot(data.frame(mean.log2Exprs =  mean.log2exprs, noise.mag_of_log2ExprsValues = cvs.log2),
+    aes(x = mean.exprs, y = noise.mag_of_log2ExprsValues)) + geom_point() +
+    scale_y_continuous(trans = log2_trans()) +
+    scale_x_continuous(trans=log2_trans()) +
+    ggtitle("Coefficient of variation of log-transformed counts")
+p1 | p2
 ```
 
 
