@@ -31,6 +31,22 @@ The fields should be labelled as follows:
 
 Based on info from <http://genomewiki.ucsc.edu/index.php/RepeatMasker>
 
+* up to ten different **classes** of repeats:
+  * Short interspersed nuclear elements (SINE), which include ALUs
+  * Long interspersed nuclear elements (LINE)
+  * Long terminal repeat elements (LTR), which include retroposons
+  * DNA repeat elements (DNA)
+  * Simple repeats (micro-satellites)
+  * Low complexity repeats
+  * Satellite repeats
+  * RNA repeats (including RNA, tRNA, rRNA, snRNA, scRNA, srpRNA)
+  * Other repeats, which includes class RC (Rolling Circle)
+  * Unknown
+
+"A "?" at the end of the "Family" or "Class" (for example, DNA?) signifies that the curator was unsure of the classification. At some point in the future, either the "?" will be removed or the classification will be changed."
+
+from [UCSC GenomeBrowser Track description](https://genome.ucsc.edu/cgi-bin/hgTables?db=hg19&hgta_group=rep&hgta_track=rmsk&hgta_table=rmsk&hgta_doSchema=describe+table+schema)
+
 ## Families, classes and so on
 
 >The most elementary level of classification of TEs is the family, which designates interspersed genomic copies derived from the amplification of an ancestral progenitor sequence (10). Each TE family can be represented by a consensus sequence approximating that of the ancestral progenitor.
