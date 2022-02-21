@@ -50,6 +50,8 @@ velocyto run10x -m repeat_msk.gtf mypath/sample01 somepath/refdata-cellranger-mm
 
 The output is a 4-layered [loom file](http://linnarssonlab.org/loompy/index.html), i.e. an HDF5 file that contains specific groups representing the main matrix as well as row and column attribute. ([loom details here](http://linnarssonlab.org/loompy/conventions/index.html)).
 
+For a more detailed run-down of how to move from R-processed data over to velocity, see [Sam's description](https://smorabit.github.io/tutorials/8_velocyto/)
+
 ### scanpy, scVelo and AnnData
 
 scVelo is based on `adata`
