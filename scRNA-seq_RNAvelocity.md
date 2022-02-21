@@ -12,7 +12,7 @@ That phase-plot is used to estimate the gene- and cell-specific velocity.
 The phase-plot is a scatterplot of the relevant row (gene) from the U and S matrices (well, a moment estimator of these quantities, but that is a minor point). In other words, the gene-specific velocities are determined by the relationship of S and U. [(HansenLabBlog)](http://www.hansenlab.org/velocity_batch)
 
 In the words of the Theis Lab:
->VFor each gene, a steady-state-ratio of pre-mature (unspliced) and mature (spliced) mRNA counts is fitted, which constitutes a constant transcriptional state. Velocities are then obtained as **residuals from this ratio**. Positive velocity indicates that a gene is up-regulated, which occurs for cells that show higher abundance of unspliced mRNA for that gene than expected in steady state. Conversely, negative velocity indicates that a gene is down-regulated.
+>For each gene, a steady-state-ratio of pre-mature (unspliced) and mature (spliced) mRNA counts is fitted, which constitutes a constant transcriptional state. Velocities are then obtained as **residuals from this ratio**. Positive velocity indicates that a gene is up-regulated, which occurs for cells that show higher abundance of unspliced mRNA for that gene than expected in steady state. Conversely, negative velocity indicates that a gene is down-regulated.
 
 [This gif](https://user-images.githubusercontent.com/31883718/80227452-eb822480-864d-11ea-9399-56886c5e2785.gif) illustrates the principles.
 
@@ -44,13 +44,18 @@ The BAM file will have to:
 - Contain an error corrected molecular barcodes as a TAG named UB or XM.
 
 ```
-# typical use case
+# wrapper for 10X
 velocyto run10x -m repeat_msk.gtf mypath/sample01 somepath/refdata-cellranger-mm10-1.2.0/genes/genes.gtf
+
+# same thing with the simple velocyto run command
+velocyto run -b filtered_barcodes.tsv -o output_path -m repeat_msk_srt.gtf bam_file.bam annotation.gtf
 ```
 
 The output is a 4-layered [loom file](http://linnarssonlab.org/loompy/index.html), i.e. an HDF5 file that contains specific groups representing the main matrix as well as row and column attribute. ([loom details here](http://linnarssonlab.org/loompy/conventions/index.html)).
 
-For a more detailed run-down of how to move from R-processed data over to velocity, see [Sam's description](https://smorabit.github.io/tutorials/8_velocyto/)
+![](https://github.com/basilkhuder/Seurat-to-RNA-Velocity/blob/master/loom_file.png)
+
+For a more detailed run-down of how to move from R-processed data over to velocity, see [Sam's description](https://smorabit.github.io/tutorials/8_velocyto/) or [Basil's](https://github.com/basilkhuder/Seurat-to-RNA-Velocity).
 
 ### scanpy, scVelo and AnnData
 
