@@ -27,6 +27,10 @@ Challenge for RNA velocity: we need to batch correct not 1 but 2 matrices simult
 
 `scVelo` currently does not pay attention to this, as they state "any additional preprocessing step only affects X and is not applied to spliced/unspliced counts." [(Ref)](https://colab.research.google.com/github/theislab/scvelo_notebooks/blob/master/VelocityBasics.ipynb#scrollTo=SgjdS1emFTbq)
 
+HansenLab suggests:
+
+>we correct S and U for library size, and form M=U+S. Then we log-transform M as log(M+1), use ComBat and invert the log transformation. This is what we feed to scVelo and friends. [Details](http://www.hansenlab.org/velocity_batch)
+
 ## Processing details
 
 The starting point for any type of velocity analysis: **2 count matrices of pre-mature (unspliced) and mature (spliced) abundances**.
